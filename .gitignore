@@ -5,3 +5,5 @@
 *.snm
 *.toc
 *.backup
+*.user
+build*
