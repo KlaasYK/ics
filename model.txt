@@ -1,0 +1,33 @@
+
+Car
+-> x,y in grid
+-> Timestep of creation
+-> Path of intersection to take
+-> Per lane, a count of waiting
+
+Intersection
+-> Has index
+-> Has algotrithm, changeable at start of simulation
+-> 4 other neighbor intersecties (or exit)
+-> 2 lanes (8 lanes total), for traffic turning left or straight forward and right.
+--> Lanes is an array of Car
+--> Lanes has state red or green
+--> Lane is a FIFO Queue
+--> Which intersection is next
+
+Discrete timestep
+-> Move only one grid cell
+-> Per lane, FIFO sorting for cars in the array (prevent delay and collisions)
+-> Car moves forward if grid ahead is empty
+-> If car is in front, and light red, wait. Add to counter for this lane.
+-> If car is in front, and light is green, move to next intersection
+-> Intersection changes state at end of timestep
+
+Cars entering
+-> Global random (seeded) input on a edge intersection lane
+-> A* (or similar) used for pathfinding
+
+Cars leaving
+-> Take the travel time by taking timestep in and subtracting it form the current timestep
+-> Count the car
+-> Add the waiting time from this car to the traffic lights it took.
