@@ -6,15 +6,17 @@
 class Car
 {
 public:
-    Car(int inLane, int outLane, int currentTimestamp, int numberOfLanes);
+    Car(int carIndex, int inLane, int outLane, int currentTimestamp, int numberOfLanes);
     ~Car();
+
+    int index;
 
     // Position of the car
     int laneIndex;
     int queueNumber;
 
     // A vector to represent the path this car is going to take
-    QVector<int> pathIndeces;
+    QVector<int> pathIndices;
 
     // Timestamps
     int creationTimestamp;
