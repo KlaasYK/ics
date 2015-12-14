@@ -22,3 +22,5 @@ HEADERS  += mainwindow.h \
     car.h
 
 FORMS    += mainwindow.ui
+
+QMAKE_CXXFLAGS += -std=c++11
