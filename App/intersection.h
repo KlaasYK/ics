@@ -11,7 +11,7 @@ class Intersection
 {
 public:
     Intersection();
-    QVector<Car> getCars();
+    QVector<Car*> getCars();
     void doSimulationStep();
 
     // Check wheter a car can enter the lane

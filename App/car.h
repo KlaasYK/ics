@@ -22,8 +22,11 @@ public:
     int creationTimestamp;
     int* laneWaitTimes;
 
+    int getNextLane();
     int getTotalWaitTime();
 private:
+    void calculatePath(int destinationIndex);
+
     int nLanes;
 };
 
