@@ -2,11 +2,13 @@
 #define SIMULATION_H
 
 #include <QVector>
+#include "car.h"
+
 class Simulation
 {
 public:
     Simulation();
-    QVector<Car> getCars();
+    QVector<Car*> getCars();
     void doSimulationStep();
 private:
     int currentTimestamp;

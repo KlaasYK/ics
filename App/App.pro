@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     simulation.cpp \
-    car.cpp
+    car.cpp \
+    intersection.cpp
 
 HEADERS  += mainwindow.h \
     simulation.h \
-    car.h
+    car.h \
+    intersection.h
 
 FORMS    += mainwindow.ui
 
