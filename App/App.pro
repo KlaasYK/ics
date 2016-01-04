@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     simulation.cpp \
     car.cpp \
-    intersection.cpp
+    intersection.cpp \
+    customopenglwidget.cpp
 
 HEADERS  += mainwindow.h \
     simulation.h \
     car.h \
-    intersection.h
+    intersection.h \
+    customopenglwidget.h
 
 FORMS    += mainwindow.ui
 
