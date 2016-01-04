@@ -5,16 +5,20 @@
 #include "car.h"
 #include "intersection.h"
 
-class Simulation
-{
+class Simulation {
 public:
-    Simulation();
-    ~Simulation();
-    QVector<Car*> getCars();
-    void doSimulationStep();
+  Simulation();
+  ~Simulation();
+
+  QVector<Intersection *> getIntersections();
+  QVector<Car *> getCars();
+
+  void doSimulationStep();
+
 private:
-    int currentTimestamp;
-    QVector<Intersection*> intersections;
+  int currentTimestamp;
+  QVector<Intersection *> intersections;
+  QVector<Car *> cars;
 };
 
 #endif // SIMULATION_H
