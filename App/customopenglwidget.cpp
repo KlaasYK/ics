@@ -25,6 +25,8 @@ void CustomOpenGLWidget::paintEvent(QPaintEvent *event) {
   int side = qMin(width(), height());
   painter.scale(side / (380.0 * 3), side / (380.0 * 3));
   paintGrid(painter);
+  painter.translate(240, 175);
+  paintCar(painter);
   painter.end();
 }
 
@@ -76,5 +78,16 @@ void CustomOpenGLWidget::paintIntersectionGrid(QPainter &painter) {
     painter.rotate(90);
     painter.translate(-190, -190);
   }
+  painter.restore();
+}
+
+void CustomOpenGLWidget::paintCar(QPainter &painter) {
+  painter.save();
+  painter.setPen(Qt::gray);
+  painter.setBrush(QBrush(QColor(0, 255, 255)));
+  painter.drawRoundedRect(-15, -10, 30, 20, 4, 4);
+  painter.setPen(QPen(QColor(0, 255, 255), 1, Qt::SolidLine));
+  painter.setBrush(QBrush(QColor(0, 155, 255)));
+  painter.drawRoundedRect(-7, -7, 18, 14, 4, 4);
   painter.restore();
 }

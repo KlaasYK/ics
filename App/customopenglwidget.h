@@ -23,6 +23,7 @@ protected:
 private:
   void paintGrid(QPainter &painter);
   void paintIntersectionGrid(QPainter &painter);
+  void paintCar(QPainter &painter);
 
   QVector<Intersection *> intersections;
   QVector<Car *> cars;
