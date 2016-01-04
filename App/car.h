@@ -13,7 +13,7 @@ public:
 
     // Position of the car
     int laneIndex;
-    int queueNumber;
+    int intersectionIndex;
 
     // A vector to represent the path this car is going to take
     QVector<int> pathIndices;
