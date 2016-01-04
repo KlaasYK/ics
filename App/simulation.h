@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include "car.h"
+#include "intersection.h"
 
 class Simulation
 {

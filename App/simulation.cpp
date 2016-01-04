@@ -2,7 +2,7 @@
 
 Simulation::Simulation()
 {
-    intersections = QVector();
+    intersections = QVector<Intersection*>();
 
 }
 
