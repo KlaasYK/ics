@@ -70,10 +70,13 @@ void CustomOpenGLWidget::paintIntersectionGrid(QPainter &painter) {
   }
   painter.restore();
   painter.save();
-  // draw road boundaries
+  // draw road boundaries and traffic signs
   painter.setPen(QPen(Qt::black, 2, Qt::SolidLine));
   for (int i = 0; i < 4; i++) {
+    painter.setBrush(QBrush(Qt::white));
     painter.drawLines(corner, 2);
+    painter.setBrush(QBrush(Qt::red));
+    painter.drawRect(150, 140, 10, 10);
     painter.translate(190, 190);
     painter.rotate(90);
     painter.translate(-190, -190);
