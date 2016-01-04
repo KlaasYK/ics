@@ -10,6 +10,13 @@ CustomOpenGLWidget::CustomOpenGLWidget(QWidget *Parent)
 
 CustomOpenGLWidget::~CustomOpenGLWidget() {}
 
+void CustomOpenGLWidget::setState(QVector<Intersection *> intersections,
+                                  QVector<Car *> cars) {
+  intersections = intersections;
+  cars = cars;
+  update();
+}
+
 void CustomOpenGLWidget::paintEvent(QPaintEvent *event) {
   QPainter painter;
   painter.begin(this);
