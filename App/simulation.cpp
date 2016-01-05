@@ -1,8 +1,13 @@
 #include "simulation.h"
 
+#include <QVector2D>
+
 Simulation::Simulation() {
   intersections = QVector<Intersection *>();
   cars = QVector<Car *>();
+
+  totalTime = 0;
+  nLanes = 0;
 
   int i;
   Intersection *inter;
@@ -63,6 +68,11 @@ Simulation::Simulation() {
   intersections.at(8)->connectedIntersections[BOTTOM] = NULL;
   intersections.at(8)->connectedIntersections[LEFT] = intersections.at(7);
 
+  // Create the first car
+  Car *c = new Car(0,0);
+  // Put it in the left midle intersection
+  intersections.at(3)->queueCar(c,-1);
+
 }
 
 
@@ -71,11 +81,27 @@ QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
 QVector<Car *> Simulation::getCars()
 {
-    // TODO: read all cars from all lanes from each intersection
     return cars;
 }
 
-void Simulation::doSimulationStep() { currentTimestamp++; }
+void Simulation::doSimulationStep() {
+    // TODO: add cars (every x steps, until timestamp == x ...)
+
+
+    // TODO: Change lights, depending on currentTimeStamp
+
+    // TODO: implement detection (or something similar), currently only timed
+
+    for (Intersection *inter : intersections) {
+        QVector2D q2d = inter->doSimulationStep();
+        totalTime = q2d.x();
+        nLanes = q2d.y();
+    }
+
+    // TODO Write statistics?
+
+    currentTimestamp++;
+}
 
 Simulation::~Simulation() {
   int i;

@@ -2,6 +2,8 @@
 #define INTERSECTION_H
 
 #include <QVector>
+#include <QVector2D>
+
 #include "car.h"
 
 // Amount of cars able to queue in lane
@@ -12,17 +14,20 @@
 #define BOTTOM 2
 #define LEFT 3
 
+
+
 class Intersection
 {
 public:
     Intersection();
     QVector<Car*> getCars();
-    void doSimulationStep();
+    QVector2D doSimulationStep();
 
     // TODO: traffic ligths
 
     bool queueCar(Car* car, int sourceIntersection);
     void clearAllLanes();
+    void setLights(QVector<int> nLights);
 
     int intersectionIndex;
     Intersection *connectedIntersections[4];
@@ -30,6 +35,8 @@ public:
     // Car indices, use -1 for empty cell
     int carsIndicesLane[8][LANE_LENGTH];
     Car* carsInLane[8][LANE_LENGTH];
+
+    QVector<int> lights;
 
 private:
     int getLocalIntersectionIndex(int intersectionIndex, bool outside);
