@@ -81,13 +81,16 @@ QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
 QVector<Car *> Simulation::getCars()
 {
-    // TODO: read all cars from all lanes from each intersection
     return cars;
 }
 
 void Simulation::doSimulationStep() {
-    // Change lights, depending on currentTimeStamp
+    // TODO: add cars (every x steps, until timestamp == x ...)
 
+
+    // TODO: Change lights, depending on currentTimeStamp
+
+    // TODO: implement detection (or something similar), currently only timed
 
     for (Intersection *inter : intersections) {
         QVector2D q2d = inter->doSimulationStep();
@@ -95,7 +98,7 @@ void Simulation::doSimulationStep() {
         nLanes = q2d.y();
     }
 
-    // Write statistics?
+    // TODO Write statistics?
 
     currentTimestamp++;
 }
