@@ -1,5 +1,7 @@
 #include "intersection.h"
 
+#include <QDebug>
+
 #define LIGHT_GREEN 1
 #define LIGHT_RED 0
 
@@ -41,7 +43,8 @@ QVector2D Intersection::doSimulationStep()
     for (i = 0; i < 8; ++i)
     {
         int *lane = carsIndicesLane[i];
-        if (lane[0] != -1 && lights.at(i) == LIGHT_GREEN) {
+        if (lane[0] != -1 && lights.at(i) == LIGHT_GREEN)
+        {
             // Green light, front row
             if (i%2 == 0) {
                 if (rand() % 100 < 50) {
@@ -76,7 +79,10 @@ QVector2D Intersection::doSimulationStep()
             }
 
         } else {
-            carsInLane[i][0]->laneTotalWaitTime++;
+            if (lane[0] != -1) {
+                qDebug() << "Waiting...";
+                carsInLane[i][0]->laneTotalWaitTime++;
+            }
         }
 
         // Processs all cars further in the lane
