@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
   sim = new Simulation();
-  ui->trafficview->setState(sim->getIntersections(), sim->getCars());
+  ui->trafficview->setState(sim->getIntersections());
   timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(step()));
   started = false;
@@ -22,7 +22,7 @@ MainWindow::~MainWindow() {
 void MainWindow::step() {
   qDebug() << "performing a step";
   sim->doSimulationStep();
-  ui->trafficview->setState(sim->getIntersections(), sim->getCars());
+  ui->trafficview->setState(sim->getIntersections());
 }
 
 void MainWindow::on_StartStopBtn_clicked() {

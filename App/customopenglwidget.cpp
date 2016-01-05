@@ -11,23 +11,20 @@ CustomOpenGLWidget::CustomOpenGLWidget(QWidget *Parent)
 
 CustomOpenGLWidget::~CustomOpenGLWidget() { delete painter; }
 
-void CustomOpenGLWidget::setState(QVector<Intersection *> intersections,
-                                  QVector<Car *> cars) {
+void CustomOpenGLWidget::setState(QVector<Intersection *> intersections) {
   this->intersections = intersections;
-  this->cars = cars;
   update();
 }
 
 void CustomOpenGLWidget::paintEvent(QPaintEvent *event) {
-    painter->begin(this);
-    painter->setRenderHint(QPainter::Antialiasing, true);
-    // make sure the drawing area is square
-    int side = qMin(width(), height());
-    painter->scale(side / (120.0 * 9), side / (120.0 * 9));
-    paintGrid();
-    painter->translate(255, 135);
-    paintCar();
-    painter->end();
+  painter->begin(this);
+  painter->setRenderHint(QPainter::Antialiasing, true);
+  // make sure the drawing area is square
+  int side = qMin(width(), height());
+  painter->scale(side / (120.0 * 9), side / (120.0 * 9));
+  paintGrid();
+  paintCars();
+  painter->end();
 }
 
 void CustomOpenGLWidget::paintGrid() {
@@ -91,13 +88,43 @@ QColor CustomOpenGLWidget::getLightColor(int intersection, int lane) {
   }
 }
 
+void CustomOpenGLWidget::paintCars() {
+  for (Intersection *inter : intersections) {
+    for (Car *car : inter->getCars()) {
+      painter->save();
+      int x = 180;
+      int y = 180;
+      // translate to the intersection
+      x += 360 * (car->intersectionIndex % 3);
+      y += 360 * (car->intersectionIndex / 3);
+      painter->translate(x, y);
+      // rotate to the lane
+      int rot = 90 * (car->laneIndex / 2);
+      painter->rotate(rot);
+      // translate to lane position
+      x = -45 + 30 * (car->laneIndex % 2);
+      y = -75 + -30 * car->queuenumber;
+#ifdef PBC
+      // if the car falls outside the drawing and periodic boundary conditions apply
+      // then move it to the other side of the lane
+      if (y < 0) {
+        y += 120 * 9;
+      }
+#endif
+      painter->translate(x, y);
+      paintCar();
+      painter->restore();
+    }
+  }
+}
+
 void CustomOpenGLWidget::paintCar() {
   painter->save();
   painter->setPen(Qt::gray);
   painter->setBrush(QBrush(QColor(0, 255, 255)));
-  painter->drawRoundedRect(-7, -10, 24, 20, 4, 4);
+  painter->drawRoundedRect(-10, -17, 20, 24, 4, 4);
   painter->setPen(QPen(QColor(0, 255, 255), 1, Qt::SolidLine));
   painter->setBrush(QBrush(QColor(0, 155, 255)));
-  painter->drawRoundedRect(0, -7, 15, 14, 4, 4);
+  painter->drawRoundedRect(-7, -15, 14, 15, 4, 4);
   painter->restore();
 }

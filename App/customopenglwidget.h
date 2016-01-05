@@ -16,7 +16,7 @@ public:
   ~CustomOpenGLWidget();
 
 public slots:
-  void setState(QVector<Intersection *> intersections, QVector<Car *> cars);
+  void setState(QVector<Intersection *> intersections);
 
 protected:
   void paintEvent(QPaintEvent *event);
@@ -25,12 +25,12 @@ private:
   QPainter *painter;
   void paintGrid();
   void paintIntersectionGrid(int intersection);
+  void paintCars();
   void paintCar();
 
   QColor getLightColor(int intersection, int lane);
 
   QVector<Intersection *> intersections;
-  QVector<Car *> cars;
 };
 
 #endif // CUSTOMOPENGLWIDGET_H

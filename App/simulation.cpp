@@ -4,7 +4,6 @@
 
 Simulation::Simulation() {
   intersections = QVector<Intersection *>();
-  cars = QVector<Car *>();
 
   totalTime = 0;
   nLanes = 0;
@@ -79,11 +78,6 @@ Simulation::Simulation() {
 
 QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
-QVector<Car *> Simulation::getCars()
-{
-    return cars;
-}
-
 void Simulation::doSimulationStep() {
     // TODO: add cars (every x steps, until timestamp == x ...)
 
@@ -108,8 +102,5 @@ Simulation::~Simulation() {
   for (i = 0; i < intersections.size(); ++i) {
     Intersection *in = intersections.at(i);
     delete in;
-  }
-  for (Car *car : cars) {
-    delete car;
   }
 }
