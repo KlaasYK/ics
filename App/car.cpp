@@ -2,45 +2,17 @@
 
 #include <QDebug>
 
-Car::Car(int carIndex, int inLane, int outLane, int currentTimestamp, int numberOfLanes)
+Car::Car(int carIndex, int currentTimestamp)
 {
     index = carIndex;
     creationTimestamp = currentTimestamp;
-    laneIndex = inLane;
-    //queueNumber to be set by the Intersection
-    calculatePath(outLane);
 
-    laneWaitTimes = new int[numberOfLanes];
-    nLanes = numberOfLanes;
+    // TODO: make an array of all possible lanes (currently only using mean)
+    laneTotalWaitTime = 0;
+    nLanes = 0;
 }
 
 Car::~Car()
 {
-    delete laneWaitTimes;
-}
 
-int Car::getNextLane() {
-    if (!pathIndices.isEmpty())
-    {
-        return pathIndices.takeFirst();
-    }
-    qDebug() << "Car is lost... Please advise";
-    return -1;
 }
-
-int Car::getTotalWaitTime()
-{
-    int totalTime = 0, index;
-    for (index = 0; index < nLanes; ++index)
-    {
-        totalTime += laneWaitTimes[index];
-    }
-    return totalTime;
-}
-
-void Car::calculatePath(int destinationIndex)
-{
-    // TODO: implement A* and store indices in pathIndices
-    // Can this be done here???
-}
-

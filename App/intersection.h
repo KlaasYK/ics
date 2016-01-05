@@ -23,6 +23,7 @@ public:
 
     bool queueCar(Car* car, int sourceIntersection);
     void clearAllLanes();
+    void setLights(QVector<int> nLights);
 
     int intersectionIndex;
     Intersection *connectedIntersections[4];
@@ -30,6 +31,8 @@ public:
     // Car indices, use -1 for empty cell
     int carsIndicesLane[8][LANE_LENGTH];
     Car* carsInLane[8][LANE_LENGTH];
+
+    QVector<int> lights;
 
 private:
     int getLocalIntersectionIndex(int intersectionIndex, bool outside);
