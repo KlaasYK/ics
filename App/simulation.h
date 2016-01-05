@@ -19,6 +19,10 @@ private:
   int currentTimestamp;
   QVector<Intersection *> intersections;
   QVector<Car *> cars;
+
+  int totalTime;
+  int nLanes;
+
 };
 
 #endif // SIMULATION_H

@@ -32,10 +32,11 @@ int Intersection::getLocalIntersectionIndex(int intersectionIndex, bool outside)
     return -1;
 }
 
-void Intersection::doSimulationStep()
+// Maybe return a vector of vectors???
+QVector2D Intersection::doSimulationStep()
 {
     // loop over all lanes
-    int i, j;
+    int i, j, lanes = 0, times = 0;
     Intersection *inter;
     for (i = 0; i < 8; ++i)
     {
@@ -55,10 +56,23 @@ void Intersection::doSimulationStep()
                 // turn left
                 inter = connectedIntersections[(i/2 +1)%4];
             }
-            if (inter->queueCar(carsInLane[i][0], intersectionIndex)) {
-                // Car is on the next lane, remove it here
+            if (inter == NULL) {
+                // Car is done, delete it
+                times += carsInLane[i][0]->laneTotalWaitTime;
+                lanes += carsInLane[i][0]->nLanes;
                 carsIndicesLane[i][0] = -1;
+                Car *car = carsInLane[i][0];
                 carsInLane[i][0] = NULL;
+                delete car;
+            } else {
+                if (inter->queueCar(carsInLane[i][0], intersectionIndex))
+                {
+                    // Car is on the next lane, remove it here
+                    carsIndicesLane[i][0] = -1;
+                    carsInLane[i][0] = NULL;
+                } else {
+                     carsInLane[i][0]->laneTotalWaitTime++;
+                }
             }
 
         } else {
@@ -83,6 +97,8 @@ void Intersection::doSimulationStep()
             }
         } // Lane for loop
     }
+
+    return QVector2D(times, lanes);
 }
 
 

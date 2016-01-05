@@ -2,6 +2,8 @@
 #define INTERSECTION_H
 
 #include <QVector>
+#include <QVector2D>
+
 #include "car.h"
 
 // Amount of cars able to queue in lane
@@ -12,12 +14,14 @@
 #define BOTTOM 2
 #define LEFT 3
 
+
+
 class Intersection
 {
 public:
     Intersection();
     QVector<Car*> getCars();
-    void doSimulationStep();
+    QVector2D doSimulationStep();
 
     // TODO: traffic ligths
 
