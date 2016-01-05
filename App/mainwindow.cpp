@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
   sim = new Simulation();
+  ui->trafficview->setState(sim->getIntersections(), sim->getCars());
   timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(step()));
   started = false;

@@ -5,6 +5,7 @@
 #include "intersection.h"
 
 #include <QOpenGLWidget>
+#include <QColor>
 
 class CustomOpenGLWidget : public QOpenGLWidget {
 
@@ -21,9 +22,12 @@ protected:
   void paintEvent(QPaintEvent *event);
 
 private:
-  void paintGrid(QPainter &painter);
-  void paintIntersectionGrid(QPainter &painter);
-  void paintCar(QPainter &painter);
+  QPainter *painter;
+  void paintGrid();
+  void paintIntersectionGrid(int intersection);
+  void paintCar();
+
+  QColor getLightColor(int intersection, int lane);
 
   QVector<Intersection *> intersections;
   QVector<Car *> cars;

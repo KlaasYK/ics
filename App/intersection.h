@@ -14,7 +14,7 @@
 #define BOTTOM 2
 #define LEFT 3
 
-
+enum class Light {GREEN, RED};
 
 class Intersection
 {
@@ -27,7 +27,7 @@ public:
 
     bool queueCar(Car* car, int sourceIntersection);
     void clearAllLanes();
-    void setLights(QVector<int> nLights);
+    void setLights(QVector<Light> nLights);
 
     int intersectionIndex;
     Intersection *connectedIntersections[4];
@@ -36,7 +36,7 @@ public:
     int carsIndicesLane[8][LANE_LENGTH];
     Car* carsInLane[8][LANE_LENGTH];
 
-    QVector<int> lights;
+    QVector<Light> lights;
 
 private:
     int getLocalIntersectionIndex(int intersectionIndex, bool outside);

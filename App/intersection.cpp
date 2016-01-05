@@ -2,18 +2,15 @@
 
 #include <QDebug>
 
-#define LIGHT_GREEN 1
-#define LIGHT_RED 0
-
 Intersection::Intersection()
 {
     // All lights are initialised red;
     for (int i = 0; i < 8; ++i) {
-        lights.append(0);
+        lights.append(Light::RED);
     }
 }
 
-void Intersection::setLights(QVector<int> nLights)
+void Intersection::setLights(QVector<Light> nLights)
 {
     lights = nLights;
 }
@@ -43,7 +40,7 @@ QVector2D Intersection::doSimulationStep()
     for (i = 0; i < 8; ++i)
     {
         int *lane = carsIndicesLane[i];
-        if (lane[0] != -1 && lights.at(i) == LIGHT_GREEN)
+        if (lane[0] != -1 && lights.at(i) == Light::GREEN)
         {
             // Green light, front row
             if (i%2 == 0) {
