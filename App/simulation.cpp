@@ -8,6 +8,7 @@ Simulation::Simulation() {
   currentTimestamp = 0;
   totalTime = 0;
   nLanes = 0;
+  carIndex = 0;
 
   int i;
   Intersection *inter;
@@ -23,25 +24,25 @@ Simulation::Simulation() {
       intersections.append(inter);
   }
 
-  intersections.at(0)->connectedIntersections[TOP] = NULL;
+  intersections.at(0)->connectedIntersections[TOP] = intersections.at(6);
   intersections.at(0)->connectedIntersections[RIGHT] = intersections.at(1);
   intersections.at(0)->connectedIntersections[BOTTOM] = intersections.at(3);
-  intersections.at(0)->connectedIntersections[LEFT] = NULL;
+  intersections.at(0)->connectedIntersections[LEFT] = intersections.at(2);
 
-  intersections.at(1)->connectedIntersections[TOP] = NULL;
+  intersections.at(1)->connectedIntersections[TOP] = intersections.at(7);
   intersections.at(1)->connectedIntersections[RIGHT] = intersections.at(2);
   intersections.at(1)->connectedIntersections[BOTTOM] = intersections.at(4);
   intersections.at(1)->connectedIntersections[LEFT] = intersections.at(0);
 
-  intersections.at(2)->connectedIntersections[TOP] = NULL;
-  intersections.at(2)->connectedIntersections[RIGHT] = NULL;
+  intersections.at(2)->connectedIntersections[TOP] = intersections.at(8);
+  intersections.at(2)->connectedIntersections[RIGHT] = intersections.at(0);
   intersections.at(2)->connectedIntersections[BOTTOM] = intersections.at(5);
   intersections.at(2)->connectedIntersections[LEFT] = intersections.at(1);
 
   intersections.at(3)->connectedIntersections[TOP] = intersections.at(0);
   intersections.at(3)->connectedIntersections[RIGHT] = intersections.at(4);
   intersections.at(3)->connectedIntersections[BOTTOM] = intersections.at(6);
-  intersections.at(3)->connectedIntersections[LEFT] = NULL;
+  intersections.at(3)->connectedIntersections[LEFT] = intersections.at(5);
 
   intersections.at(4)->connectedIntersections[TOP] = intersections.at(1);
   intersections.at(4)->connectedIntersections[RIGHT] = intersections.at(5);
@@ -49,29 +50,24 @@ Simulation::Simulation() {
   intersections.at(4)->connectedIntersections[LEFT] = intersections.at(3);
 
   intersections.at(5)->connectedIntersections[TOP] = intersections.at(2);
-  intersections.at(5)->connectedIntersections[RIGHT] = NULL;
+  intersections.at(5)->connectedIntersections[RIGHT] = intersections.at(3);
   intersections.at(5)->connectedIntersections[BOTTOM] = intersections.at(8);
   intersections.at(5)->connectedIntersections[LEFT] = intersections.at(4);
 
   intersections.at(6)->connectedIntersections[TOP] = intersections.at(3);
   intersections.at(6)->connectedIntersections[RIGHT] = intersections.at(7);
-  intersections.at(6)->connectedIntersections[BOTTOM] = NULL;
-  intersections.at(6)->connectedIntersections[LEFT] = NULL;
+  intersections.at(6)->connectedIntersections[BOTTOM] = intersections.at(0);
+  intersections.at(6)->connectedIntersections[LEFT] = intersections.at(8);
 
   intersections.at(7)->connectedIntersections[TOP] = intersections.at(4);
   intersections.at(7)->connectedIntersections[RIGHT] = intersections.at(8);
-  intersections.at(7)->connectedIntersections[BOTTOM] = NULL;
+  intersections.at(7)->connectedIntersections[BOTTOM] = intersections.at(1);
   intersections.at(7)->connectedIntersections[LEFT] = intersections.at(6);
 
   intersections.at(8)->connectedIntersections[TOP] = intersections.at(5);
-  intersections.at(8)->connectedIntersections[RIGHT] = NULL;
-  intersections.at(8)->connectedIntersections[BOTTOM] = NULL;
+  intersections.at(8)->connectedIntersections[RIGHT] = intersections.at(6);
+  intersections.at(8)->connectedIntersections[BOTTOM] = intersections.at(2);
   intersections.at(8)->connectedIntersections[LEFT] = intersections.at(7);
-
-  // Create the first car
-  Car *c = new Car(0,0);
-  // Put it in the left midle intersection
-  intersections.at(3)->queueCar(c,-1);
 
 }
 
@@ -84,24 +80,18 @@ int Simulation::getWaitTime() { return totalTime; }
 QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
 void Simulation::doSimulationStep() {
-    // TODO: add cars (every x steps, until timestamp == x ...)
-    Car *c = new Car(0,0);
-    Car *c2 = new Car(0,0);
-    Car *c3 = new Car(0,0);
-    Car *c4 = new Car(0,0);
-    // Put it in the left midle intersection
-    if(!intersections.at(3)->queueCar(c,-1)) {
-        delete c;
+
+    if (currentTimestamp < 200) {
+        int inter, prev;
+        Car *c = new Car(carIndex++,currentTimestamp);
+        cars.append(c);
+        do {
+            inter = rand() % 9;
+            prev = (inter + 3) % 9; // Car come always from bottom
+            // Make it a random dir
+        } while (!intersections.at(inter)->queueCar(c,prev));
     }
-    if (!intersections.at(5)->queueCar(c2,-1)) {
-        delete c2;
-    }
-    if (!intersections.at(1)->queueCar(c3,-1)) {
-        delete c3;
-    }
-    if (!intersections.at(7)->queueCar(c4,-1)) {
-        delete c4;
-    }
+
 
     // TODO: implement detection (or something similar), currently only timed
 
@@ -121,4 +111,9 @@ Simulation::~Simulation() {
     Intersection *in = intersections.at(i);
     delete in;
   }
+
+  for (Car *car : cars) {
+      delete car;
+  }
+
 }

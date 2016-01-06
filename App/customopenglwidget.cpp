@@ -2,6 +2,10 @@
 
 #include <QPainter>
 
+#include <QDebug>
+
+#define PBC
+
 CustomOpenGLWidget::CustomOpenGLWidget(QWidget *Parent)
     : QOpenGLWidget(Parent) {
   painter = new QPainter();
@@ -94,9 +98,12 @@ void CustomOpenGLWidget::paintCars() {
       painter->save();
       int x = 180;
       int y = 180;
+      int pixx, pixy;
       // translate to the intersection
       x += 360 * (car->intersectionIndex % 3);
       y += 360 * (car->intersectionIndex / 3);
+      pixx = x;
+      pixy = y;
       painter->translate(x, y);
       // rotate to the lane
       int rot = 90 * (car->laneIndex / 2);
@@ -107,8 +114,15 @@ void CustomOpenGLWidget::paintCars() {
 #ifdef PBC
       // if the car falls outside the drawing and periodic boundary conditions apply
       // then move it to the other side of the lane
-      if (y < 0) {
-        y += 120 * 9;
+      // This is all local
+      float frot = rot/180.0 * M_PI;
+      pixx += x*cos(frot)-y*sin(frot);
+      pixy += x*sin(frot)+y*cos(frot);
+      if (pixx < 0 || pixy < 0) {
+          y += 120 * 9;
+      }
+      if (pixx > 1080 || pixy > 1080) {
+          y += 120 * 9;
       }
 #endif
       painter->translate(x, y);

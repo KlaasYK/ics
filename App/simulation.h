@@ -12,16 +12,19 @@ public:
 
   QVector<Intersection *> getIntersections();
 
+
   int getStepNumber();
   int getQueued();
   int getWaitTime();
   void doSimulationStep();
 
 private:
+  int carIndex;
   int currentTimestamp;
   int totalTime;
   int nLanes;
   QVector<Intersection *> intersections;
+  QVector<Car *> cars;
 };
 
 #endif // SIMULATION_H
