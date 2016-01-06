@@ -11,15 +11,32 @@ Intersection::Intersection()
 }
 
 // simple traffic light control, it should probably be changeable maybe by putting it in a subclass?
-void Intersection::changeLights(int timestamp) {
-    int stepsGreen = 4;
-    int lane = timestamp / stepsGreen % 4;
-    int nextLane = (timestamp + 1) / stepsGreen % 4;
-    lights[lane * 2] = Light::RED;
-    lights[lane * 2 + 1] = Light::RED;
-    lights[nextLane * 2] = Light::GREEN;
-    lights[nextLane * 2 + 1] = Light::GREEN;
+void Intersection::changeLights(int timestamp, int stepsGreen, int type) {
+    // Reset first (used when switching while running)
+    for (int i = 0; i < 8; ++i) {
+        lights[i] = Light::RED;
+    }
+    switch (type) {
+    case 0: simple(timestamp, stepsGreen); break;
+    case 1: twoSided(timestamp, stepsGreen); break;
+    }
+
 }
+
+void Intersection::simple(int timestamp, int stepsGreen)
+{
+    int lane = timestamp / stepsGreen % 4;
+    lights[lane * 2] = Light::GREEN;
+    lights[lane * 2 + 1] = Light::GREEN;
+}
+
+void Intersection::twoSided(int timestamp, int stepsGreen)
+{
+    int lane = timestamp / stepsGreen % 4;
+    lights[lane] = Light::GREEN;
+    lights[(lane+4)%8] = Light::GREEN;
+}
+
 
 void Intersection::setLights(QVector<Light> nLights)
 {
@@ -186,6 +203,10 @@ void Intersection::clearAllLanes()
         {
             carsIndicesLane[i][j] = -1;
         }
+    }
+    // All lights are initialised red;
+    for (int i = 0; i < 8; ++i) {
+        lights[i]=Light::RED;
     }
 }
 

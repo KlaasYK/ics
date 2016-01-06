@@ -21,6 +21,10 @@ private slots:
   void step();
   void on_StepBtn_clicked();
   void on_StartStopBtn_clicked();
+  void on_ResetBtn_clicked();
+  void on_SimpleOption_clicked();
+  void on_TwoSidedOption_clicked();
+  void on_GreenSlider_valueChanged(int value);
 
 private:
   Ui::MainWindow *ui;

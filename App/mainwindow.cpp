@@ -20,12 +20,32 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::step() {
-  qDebug() << "performing a step";
   sim->doSimulationStep();
   ui->trafficview->setState(sim->getIntersections());
   ui->QueuedTotal->setText(QString::number(sim->getQueued()));
   ui->WaitTime->setText(QString::number(sim->getWaitTime()));
   ui->Step->setText(QString::number(sim->getStepNumber()));
+}
+
+void MainWindow::on_ResetBtn_clicked() {
+    sim->resetSimulation();
+    ui->trafficview->setState(sim->getIntersections());
+    ui->QueuedTotal->setText(QString::number(sim->getQueued()));
+    ui->WaitTime->setText(QString::number(sim->getWaitTime()));
+    ui->Step->setText(QString::number(sim->getStepNumber()));
+}
+
+void MainWindow::on_GreenSlider_valueChanged(int value) {
+    sim->stepsGreen = value;
+    ui->GreenNumber->setText(QString::number(value));
+}
+
+void MainWindow::on_SimpleOption_clicked() {
+    sim->algorithm = 0;
+}
+
+void MainWindow::on_TwoSidedOption_clicked() {
+    sim->algorithm = 1;
 }
 
 void MainWindow::on_StartStopBtn_clicked() {

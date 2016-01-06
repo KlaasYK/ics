@@ -23,7 +23,7 @@ public:
     QVector<Car*> getCars();
     QVector2D doSimulationStep();
 
-    void changeLights(int timestamp);
+    void changeLights(int timestamp, int stepsGreen, int type);
 
     bool queueCar(Car* car, int sourceIntersection);
     void clearAllLanes();
@@ -40,6 +40,8 @@ public:
 
 private:
     int getLocalIntersectionIndex(int intersectionIndex, bool outside);
+    void simple(int timestamp, int stepsGreen);
+    void twoSided(int timestamp, int stepsGreen);
 };
 
 #endif // INTERSECTION_H

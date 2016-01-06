@@ -17,6 +17,10 @@ public:
   int getQueued();
   int getWaitTime();
   void doSimulationStep();
+  void resetSimulation();
+
+  int stepsGreen;
+  int algorithm;
 
 private:
   int carIndex;

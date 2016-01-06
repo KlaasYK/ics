@@ -2,6 +2,18 @@
 
 #include <QVector2D>
 
+void Simulation::resetSimulation() {
+    currentTimestamp = 0;
+    totalTime = 0;
+    nLanes = 0;
+    carIndex = 0;
+    for (int i = 0; i < 9; ++i)
+    {
+        intersections[i]->clearAllLanes();
+    }
+    cars.clear();
+}
+
 Simulation::Simulation() {
   intersections = QVector<Intersection *>();
 
@@ -9,6 +21,8 @@ Simulation::Simulation() {
   totalTime = 0;
   nLanes = 0;
   carIndex = 0;
+  algorithm = 0;
+  stepsGreen = 4;
 
   int i;
   Intersection *inter;
@@ -81,7 +95,7 @@ QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
 void Simulation::doSimulationStep() {
 
-    if (currentTimestamp < 400) {
+    if (currentTimestamp < 200) {
         int inter, prev,r;
         Car *c = new Car(carIndex++,currentTimestamp);
         cars.append(c);
@@ -104,7 +118,7 @@ void Simulation::doSimulationStep() {
     // TODO: implement detection (or something similar), currently only timed
 
     for (Intersection *inter : intersections) {
-        inter->changeLights(currentTimestamp);
+        inter->changeLights(currentTimestamp,stepsGreen, algorithm);
         QVector2D q2d = inter->doSimulationStep();
         totalTime += q2d.x();
         nLanes += q2d.y();
@@ -114,14 +128,6 @@ void Simulation::doSimulationStep() {
 }
 
 Simulation::~Simulation() {
-  int i;
-  for (i = 0; i < intersections.size(); ++i) {
-    Intersection *in = intersections.at(i);
-    delete in;
-  }
-
-  for (Car *car : cars) {
-      delete car;
-  }
-
+    cars.clear();
+    intersections.clear();
 }
