@@ -70,9 +70,9 @@ void CustomOpenGLWidget::paintIntersectionGrid(int intersection) {
   for (int i = 0; i < 4; i++) {
     painter->setBrush(QBrush(Qt::white));
     painter->drawLines(corner, 2);
-    painter->setBrush(QBrush(getLightColor(intersection, 2 * i)));
+    painter->setBrush(QBrush(getLightColor(intersection, 2 * i+ 1)));
     painter->drawRect(110, 100, 10, 10);
-    painter->setBrush(QBrush(getLightColor(intersection, 2 * i + 1)));
+    painter->setBrush(QBrush(getLightColor(intersection, 2 * i)));
     painter->drawRect(100, 100, 10, 10);
     painter->translate(180, 180);
     painter->rotate(90);
