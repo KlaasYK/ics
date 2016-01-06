@@ -5,6 +5,7 @@
 Simulation::Simulation() {
   intersections = QVector<Intersection *>();
 
+  currentTimestamp = 0;
   totalTime = 0;
   nLanes = 0;
 
@@ -74,7 +75,11 @@ Simulation::Simulation() {
 
 }
 
+int Simulation::getStepNumber() { return currentTimestamp; }
 
+int Simulation::getQueued() { return nLanes; }
+
+int Simulation::getWaitTime() { return totalTime; }
 
 QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 

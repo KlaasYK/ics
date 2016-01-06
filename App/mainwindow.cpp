@@ -23,8 +23,9 @@ void MainWindow::step() {
   qDebug() << "performing a step";
   sim->doSimulationStep();
   ui->trafficview->setState(sim->getIntersections());
-  ui->QueuedLabel->setText(QString::number(sim->nLanes));
-  ui->WaitTimeLabel->setText(QString::number(sim->totalTime));
+  ui->QueuedTotal->setText(QString::number(sim->getQueued()));
+  ui->WaitTime->setText(QString::number(sim->getWaitTime()));
+  ui->Step->setText(QString::number(sim->getStepNumber()));
 }
 
 void MainWindow::on_StartStopBtn_clicked() {
@@ -32,10 +33,12 @@ void MainWindow::on_StartStopBtn_clicked() {
   if (started) {
     timer->stop();
     started = false;
+    ui->StartStopBtn->setText("Start");
   } else {
     // every 500 ms
     timer->start(100);
     started = true;
+    ui->StartStopBtn->setText("Stop");
   }
 }
 void MainWindow::on_StepBtn_clicked() {

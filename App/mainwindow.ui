@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Traffic lights</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="StartStopBtn">
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Start/Stop</string>
+     <string>Start</string>
     </property>
    </widget>
    <widget class="QPushButton" name="StepBtn">
@@ -81,11 +81,11 @@
       <height>100</height>
      </rect>
     </property>
-    <widget class="QLabel" name="WaitTimeTotal">
+    <widget class="QLabel" name="WaitTimeLabel">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>70</y>
        <width>100</width>
        <height>15</height>
       </rect>
@@ -94,11 +94,11 @@
       <string>Total wait time:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="QueueTotal">
+    <widget class="QLabel" name="QueuedLabel">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>40</y>
        <width>100</width>
        <height>14</height>
       </rect>
@@ -107,11 +107,11 @@
       <string>Total queued:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="WaitTimeLabel">
+    <widget class="QLabel" name="WaitTime">
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>30</y>
+       <y>70</y>
        <width>60</width>
        <height>15</height>
       </rect>
@@ -123,11 +123,40 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="QueuedLabel">
+    <widget class="QLabel" name="QueuedTotal">
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>60</y>
+       <y>40</y>
+       <width>60</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="StepLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>59</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Step:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Step">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>10</y>
        <width>60</width>
        <height>15</height>
       </rect>
