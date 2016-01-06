@@ -10,6 +10,17 @@ Intersection::Intersection()
     }
 }
 
+// simple traffic light control, it should probably be changeable maybe by putting it in a subclass?
+void Intersection::changeLights(int timestamp) {
+    int stepsGreen = 4;
+    int lane = timestamp / stepsGreen % 4;
+    int nextLane = (timestamp + 1) / stepsGreen % 4;
+    lights[lane * 2] = Light::RED;
+    lights[lane * 2 + 1] = Light::RED;
+    lights[nextLane * 2] = Light::GREEN;
+    lights[nextLane * 2 + 1] = Light::GREEN;
+}
+
 void Intersection::setLights(QVector<Light> nLights)
 {
     lights = nLights;
@@ -24,7 +35,7 @@ int Intersection::getLocalIntersectionIndex(int intersectionIndex, bool outside)
             // Choose the first empy
             return i;
         }
-        if (connectedIntersections[i]->intersectionIndex == intersectionIndex) {
+        if (connectedIntersections[i] && connectedIntersections[i]->intersectionIndex == intersectionIndex) {
             return i;
         }
     }

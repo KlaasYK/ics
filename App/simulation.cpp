@@ -81,12 +81,10 @@ QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 void Simulation::doSimulationStep() {
     // TODO: add cars (every x steps, until timestamp == x ...)
 
-
-    // TODO: Change lights, depending on currentTimeStamp
-
     // TODO: implement detection (or something similar), currently only timed
 
     for (Intersection *inter : intersections) {
+        inter->changeLights(currentTimestamp);
         QVector2D q2d = inter->doSimulationStep();
         totalTime = q2d.x();
         nLanes = q2d.y();

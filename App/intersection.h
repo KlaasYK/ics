@@ -23,7 +23,7 @@ public:
     QVector<Car*> getCars();
     QVector2D doSimulationStep();
 
-    // TODO: traffic ligths
+    void changeLights(int timestamp);
 
     bool queueCar(Car* car, int sourceIntersection);
     void clearAllLanes();
