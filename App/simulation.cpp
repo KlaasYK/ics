@@ -12,6 +12,7 @@ void Simulation::resetSimulation() {
         intersections[i]->clearAllLanes();
     }
     cars.clear();
+    srand(42);
 }
 
 Simulation::Simulation() {
@@ -83,6 +84,7 @@ Simulation::Simulation() {
   intersections.at(8)->connectedIntersections[BOTTOM] = intersections.at(2);
   intersections.at(8)->connectedIntersections[LEFT] = intersections.at(7);
 
+  srand(42);
 }
 
 int Simulation::getStepNumber() { return currentTimestamp; }
