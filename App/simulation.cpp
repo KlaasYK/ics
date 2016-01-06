@@ -81,14 +81,22 @@ QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
 void Simulation::doSimulationStep() {
 
-    if (currentTimestamp < 200) {
-        int inter, prev;
+    if (currentTimestamp < 400) {
+        int inter, prev,r;
         Car *c = new Car(carIndex++,currentTimestamp);
         cars.append(c);
         do {
             inter = rand() % 9;
-            prev = (inter + 3) % 9; // Car come always from bottom
-            // Make it a random dir
+            r = rand()%100;
+            if (r < 25) {
+                prev = (inter + 3) % 9; // Bottom
+            } else if (r < 50) {
+                prev = (inter - 3) % 9; // Top
+            } else if (r < 75) {
+                prev = (inter%3 + 1)%3+inter/3*3; // Right
+            } else {
+                prev = (inter%3 - 1)%3+inter/3*3; // Right
+            }
         } while (!intersections.at(inter)->queueCar(c,prev));
     }
 
