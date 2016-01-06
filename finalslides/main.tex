@@ -5,7 +5,7 @@
 
 
 \title{Introduction to Computational Science}
-\subtitle{Optimizing Trafic Lights in Urban Street Grids}
+\subtitle{Optimizing Traffic Lights in Urban Street Grids}
 \author{Klaas Kliffen, Jan Kramer}
 \setbeamertemplate{navigation symbols}{}
 \date{January 7, 2016}
@@ -35,13 +35,50 @@
 \end{frame}
 
 \begin{frame}{Demo}
-%Show the demo
+%Show the demo (image of the program)
 
 \end{frame}
 
-\begin{frame}{Results}
+
+\begin{frame}{Results: pattern}
 %What did we find
+\begin{itemize}
+ \item A pattern emerged with long switch timings on the two sided algorithm
+ %TODO: show an image of both states
+\end{itemize}
 \end{frame}
+
+
+\begin{frame}{Results: mean car waiting time}
+\textbf{Definition:} cars that cannot move to the next field, either to a 
+red traffic light or another car. Averaged over all lanes.\\~\\
+Measured using 200 cars simulating 5000 steps.
+
+\begin{table}
+\centering
+\begin{tabular}{l|c|c|c|c|c}
+algorithm/switch time & 1 & 4 & 8 & 16 & 32\\
+\hline
+simple & 1 & 4 & 8 & 16 & 32\\
+two sided & 1 & 4 & 8 & 16 & 32\\
+\end{tabular}
+\end{table}
+ 
+\end{frame}
+
+\begin{frame}{Results: cars moved per intersection per step}
+\begin{table}
+\centering
+\begin{tabular}{l|c|c|c|c|c}
+algorithm/switch time & 1 & 4 & 8 & 16 & 32\\
+\hline
+simple & 1 & 4 & 8 & 16 & 32\\
+two sided & 1 & 4 & 8 & 16 & 32\\
+\end{tabular}
+\end{table}
+ 
+\end{frame}
+
 
 \begin{frame}{Conclusion}
     
@@ -49,7 +86,7 @@
 
 \begin{frame}{Introduction to Computational Science}
 \begin{center}
-{\large Optimizing Trafic Lights in Urban Street Grids}\\
+{\large Optimizing Traffic Lights in Urban Street Grids}\\
 \end{center}
 
 \begin{center}
