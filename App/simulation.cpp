@@ -125,11 +125,12 @@ void Simulation::doSimulationStep() {
 
     // TODO: implement detection (or something similar), currently only timed
 
+    carsMoved = 0;
     for (Intersection *inter : intersections) {
         inter->changeLights(currentTimestamp,stepsGreen, algorithm);
         QVector2D q2d = inter->doSimulationStep();
         totalTime += q2d.x();
-        carsMoved = q2d.y();
+        carsMoved += q2d.y();
         carsMovedTotal += q2d.y();
     }
 
