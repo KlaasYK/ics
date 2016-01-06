@@ -17,7 +17,6 @@ public:
     // Timestamps
     int creationTimestamp;
     int laneTotalWaitTime;
-    int nLanes;
 
 };
 

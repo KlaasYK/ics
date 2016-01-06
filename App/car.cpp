@@ -9,7 +9,6 @@ Car::Car(int carIndex, int currentTimestamp)
 
     // TODO: make an array of all possible lanes (currently only using mean)
     laneTotalWaitTime = 0;
-    nLanes = 0;
 }
 
 Car::~Car()

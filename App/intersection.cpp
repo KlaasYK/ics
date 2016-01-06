@@ -63,7 +63,7 @@ int Intersection::getLocalIntersectionIndex(int intersectionIndex, bool outside)
 QVector2D Intersection::doSimulationStep()
 {
     // loop over all lanes
-    int i, j, lanes = 0, times = 0;
+    int i, j, cars = 0, times = 0;
     Intersection *inter;
     for (i = 0; i < 8; ++i)
     {
@@ -84,25 +84,18 @@ QVector2D Intersection::doSimulationStep()
                 // turn left
                 inter = connectedIntersections[(i/2 +1)%4];
             }
-            if (inter == NULL) {
-                // Car is done, delete it
+            if (inter->queueCar(carsInLane[i][0], intersectionIndex))
+            {
                 times += carsInLane[i][0]->laneTotalWaitTime;
-                lanes += carsInLane[i][0]->nLanes;
+                cars++;
+                carsInLane[i][0]->laneTotalWaitTime = 0;
+                // Car is on the next lane, remove it here
                 carsIndicesLane[i][0] = -1;
-                Car *car = carsInLane[i][0];
                 carsInLane[i][0] = NULL;
-                delete car;
-            } else {
-                if (inter->queueCar(carsInLane[i][0], intersectionIndex))
-                {
-                    // Car is on the next lane, remove it here
-                    carsIndicesLane[i][0] = -1;
-                    carsInLane[i][0] = NULL;
-                } else {
-                     carsInLane[i][0]->laneTotalWaitTime++;
-                }
-            }
 
+            } else {
+                 carsInLane[i][0]->laneTotalWaitTime++;
+            }
         } else {
             if (lane[0] != -1) {
                 carsInLane[i][0]->laneTotalWaitTime++;
@@ -128,7 +121,7 @@ QVector2D Intersection::doSimulationStep()
         } // Lane for loop
     }
 
-    return QVector2D(times, lanes);
+    return QVector2D(times, cars);
 }
 
 
@@ -147,7 +140,6 @@ bool Intersection::queueCar(Car *car, int sourceIntersection) {
                 carsInLane[lane][LANE_LENGTH-1] = car;
                 car->laneIndex = lane;
                 car->intersectionIndex = intersectionIndex;
-                car->nLanes++;
                 car->queuenumber = LANE_LENGTH-1;
                 return true;
             }
@@ -156,7 +148,6 @@ bool Intersection::queueCar(Car *car, int sourceIntersection) {
             carsInLane[lane][LANE_LENGTH-1] = car;
             car->laneIndex = lane;
             car->intersectionIndex = intersectionIndex;
-            car->nLanes++;
             car->queuenumber = LANE_LENGTH-1;
             return true;
         }
@@ -167,7 +158,6 @@ bool Intersection::queueCar(Car *car, int sourceIntersection) {
         carsInLane[lane+1][LANE_LENGTH-1] = car;
         car->laneIndex = lane+1;
         car->intersectionIndex = intersectionIndex;
-        car->nLanes++;
         car->queuenumber = LANE_LENGTH-1;
         return true;
     }

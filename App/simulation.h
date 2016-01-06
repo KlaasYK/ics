@@ -14,8 +14,10 @@ public:
 
 
   int getStepNumber();
-  int getQueued();
+  int getCarsTotal();
+  int getCarsMoved();
   int getWaitTime();
+
   void doSimulationStep();
   void resetSimulation();
 
@@ -26,7 +28,8 @@ private:
   int carIndex;
   int currentTimestamp;
   int totalTime;
-  int nLanes;
+  int carsMoved;
+  int carsMovedTotal;
   QVector<Intersection *> intersections;
   QVector<Car *> cars;
 };

@@ -22,17 +22,19 @@ MainWindow::~MainWindow() {
 void MainWindow::step() {
   sim->doSimulationStep();
   ui->trafficview->setState(sim->getIntersections());
-  ui->QueuedTotal->setText(QString::number(sim->getQueued()));
+  ui->CarsMoved->setText(QString::number(sim->getCarsMoved()));
   ui->WaitTime->setText(QString::number(sim->getWaitTime()));
   ui->Step->setText(QString::number(sim->getStepNumber()));
+  ui->Cars->setText(QString::number(sim->getCarsTotal()));
 }
 
 void MainWindow::on_ResetBtn_clicked() {
     sim->resetSimulation();
     ui->trafficview->setState(sim->getIntersections());
-    ui->QueuedTotal->setText(QString::number(sim->getQueued()));
+    ui->CarsMoved->setText(QString::number(sim->getCarsMoved()));
     ui->WaitTime->setText(QString::number(sim->getWaitTime()));
     ui->Step->setText(QString::number(sim->getStepNumber()));
+    ui->Cars->setText(QString::number(sim->getCarsTotal()));
 }
 
 void MainWindow::on_GreenSlider_valueChanged(int value) {

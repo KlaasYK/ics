@@ -5,7 +5,7 @@
 void Simulation::resetSimulation() {
     currentTimestamp = 0;
     totalTime = 0;
-    nLanes = 0;
+    carsMovedTotal = 0;
     carIndex = 0;
     for (int i = 0; i < 9; ++i)
     {
@@ -19,7 +19,7 @@ Simulation::Simulation() {
 
   currentTimestamp = 0;
   totalTime = 0;
-  nLanes = 0;
+  carsMovedTotal = 0;
   carIndex = 0;
   algorithm = 0;
   stepsGreen = 4;
@@ -87,9 +87,17 @@ Simulation::Simulation() {
 
 int Simulation::getStepNumber() { return currentTimestamp; }
 
-int Simulation::getQueued() { return nLanes; }
+int Simulation::getCarsTotal() { return cars.size(); }
 
-int Simulation::getWaitTime() { return totalTime; }
+int Simulation::getCarsMoved() { return carsMoved; }
+
+int Simulation::getWaitTime() {
+    if (carsMovedTotal > 0) {
+        return totalTime / carsMovedTotal;
+    } else {
+        return 0;
+    }
+}
 
 QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
@@ -121,7 +129,8 @@ void Simulation::doSimulationStep() {
         inter->changeLights(currentTimestamp,stepsGreen, algorithm);
         QVector2D q2d = inter->doSimulationStep();
         totalTime += q2d.x();
-        nLanes += q2d.y();
+        carsMoved = q2d.y();
+        carsMovedTotal += q2d.y();
     }
 
     currentTimestamp++;
