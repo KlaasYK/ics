@@ -32,7 +32,7 @@ void MainWindow::on_StartStopBtn_clicked() {
     started = false;
   } else {
     // every 500 ms
-    timer->start(500);
+    timer->start(100);
     started = true;
   }
 }

@@ -60,7 +60,7 @@ Simulation::Simulation() {
   intersections.at(7)->connectedIntersections[TOP] = intersections.at(4);
   intersections.at(7)->connectedIntersections[RIGHT] = intersections.at(8);
   intersections.at(7)->connectedIntersections[BOTTOM] = NULL;
-  intersections.at(7)->connectedIntersections[LEFT] = NULL;
+  intersections.at(7)->connectedIntersections[LEFT] = intersections.at(6);
 
   intersections.at(8)->connectedIntersections[TOP] = intersections.at(5);
   intersections.at(8)->connectedIntersections[RIGHT] = NULL;
@@ -80,6 +80,23 @@ QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
 void Simulation::doSimulationStep() {
     // TODO: add cars (every x steps, until timestamp == x ...)
+    Car *c = new Car(0,0);
+    Car *c2 = new Car(0,0);
+    Car *c3 = new Car(0,0);
+    Car *c4 = new Car(0,0);
+    // Put it in the left midle intersection
+    if(!intersections.at(3)->queueCar(c,-1)) {
+        delete c;
+    }
+    if (!intersections.at(5)->queueCar(c2,-1)) {
+        delete c2;
+    }
+    if (!intersections.at(1)->queueCar(c3,-1)) {
+        delete c3;
+    }
+    if (!intersections.at(7)->queueCar(c4,-1)) {
+        delete c4;
+    }
 
     // TODO: implement detection (or something similar), currently only timed
 

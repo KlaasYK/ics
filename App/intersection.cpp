@@ -88,7 +88,6 @@ QVector2D Intersection::doSimulationStep()
 
         } else {
             if (lane[0] != -1) {
-                qDebug() << "Waiting...";
                 carsInLane[i][0]->laneTotalWaitTime++;
             }
         }
