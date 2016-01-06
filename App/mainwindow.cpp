@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
   timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(step()));
   started = false;
+  delay = 100;
 }
 
 MainWindow::~MainWindow() {
@@ -40,6 +41,11 @@ void MainWindow::on_GreenSlider_valueChanged(int value) {
     ui->GreenNumber->setText(QString::number(value));
 }
 
+void MainWindow::on_StepDelay_valueChanged(int value) {
+    delay = value;
+    ui->DelayText->setText(QString::number(value));
+}
+
 void MainWindow::on_SimpleOption_clicked() {
     sim->algorithm = 0;
 }
@@ -56,7 +62,7 @@ void MainWindow::on_StartStopBtn_clicked() {
     ui->StartStopBtn->setText("Start");
   } else {
     // every 500 ms
-    timer->start(100);
+    timer->start(delay);
     started = true;
     ui->StartStopBtn->setText("Stop");
   }
