@@ -23,6 +23,8 @@ void MainWindow::step() {
   qDebug() << "performing a step";
   sim->doSimulationStep();
   ui->trafficview->setState(sim->getIntersections());
+  ui->QueuedLabel->setText(QString::number(sim->nLanes));
+  ui->WaitTimeLabel->setText(QString::number(sim->totalTime));
 }
 
 void MainWindow::on_StartStopBtn_clicked() {

@@ -103,11 +103,9 @@ void Simulation::doSimulationStep() {
     for (Intersection *inter : intersections) {
         inter->changeLights(currentTimestamp);
         QVector2D q2d = inter->doSimulationStep();
-        totalTime = q2d.x();
-        nLanes = q2d.y();
+        totalTime += q2d.x();
+        nLanes += q2d.y();
     }
-
-    // TODO Write statistics?
 
     currentTimestamp++;
 }

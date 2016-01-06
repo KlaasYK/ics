@@ -14,13 +14,11 @@ public:
 
   void doSimulationStep();
 
+  int totalTime;
+  int nLanes;
 private:
   int currentTimestamp;
   QVector<Intersection *> intersections;
-
-  int totalTime;
-  int nLanes;
-
 };
 
 #endif // SIMULATION_H
