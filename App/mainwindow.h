@@ -25,12 +25,14 @@ private slots:
   void on_SimpleOption_clicked();
   void on_TwoSidedOption_clicked();
   void on_GreenSlider_valueChanged(int value);
+  void on_StepDelay_valueChanged(int value);
 
 private:
   Ui::MainWindow *ui;
   Simulation *sim;
   QTimer *timer;
   bool started;
+  int delay;
 };
 
 #endif // MAINWINDOW_H
