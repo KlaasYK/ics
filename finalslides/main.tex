@@ -18,13 +18,13 @@
 % What did we model
 \begin{figure}
 \centering
-\includegraphics[width=.8\textwidth]{trafficlighttree.jpg}
+\includegraphics[width=.45\textwidth]{trafficlighttree.jpg}
 \end{figure}
 \end{frame}
 
 \begin{frame}{The problem}
 \begin{itemize}
-    \item analyse different traffic light solutions
+    \item analyze different traffic light solutions
     \item "American city" grid
     \item uniform traffic
 \end{itemize}
@@ -43,7 +43,20 @@
 
 % the implementation:
 \begin{frame}{Intersection design}
-% What is the intersection class
+
+\begin{itemize}
+ \item 8 lanes per intersection
+ \begin{itemize}
+  \item 2 per direction:
+  \item 1 for turning left
+  \item 1 for forward and turning right
+ \end{itemize}
+ \item On queuing of a car, chooses randomly one of two lanes of the next intersection (if available)
+
+
+\end{itemize}
+
+
 \end{frame}
 
 \begin{frame}{Statistics gathering}
@@ -100,8 +113,9 @@ two sided & 6 & 7 & 8 & 18 & 39\\
  
 \end{frame}
 
-\begin{frame}{Results: cars moved per intersection per step}
-\textbf{Definition:}\\~\\
+\begin{frame}{Results: cars moved per 9 intersections per step}
+\textbf{Definition:} total car count that passed a traffic light during a step.
+Averaged over all steps.\\~\\
 Measured using 200 cars simulating 5000 steps.
 \begin{table}
 \centering
