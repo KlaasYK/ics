@@ -28,7 +28,6 @@ private:
   int carIndex;
   int currentTimestamp;
   int totalTime;
-  int carsMoved;
   int carsMovedTotal;
   QVector<Intersection *> intersections;
   QVector<Car *> cars;

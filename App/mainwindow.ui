@@ -99,12 +99,12 @@
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>100</width>
+       <width>130</width>
        <height>14</height>
       </rect>
      </property>
      <property name="text">
-      <string>Cars moved:</string>
+      <string>Average cars moved:</string>
      </property>
     </widget>
     <widget class="QLabel" name="WaitTime">
