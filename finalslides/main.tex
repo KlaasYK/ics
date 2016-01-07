@@ -70,7 +70,7 @@
 \begin{frame}{Demo}
 \begin{figure}
 \centering
-\includegraphics[width=.8\textwidth]{vertical.png}
+\includegraphics[width=.8\textwidth]{ui.png}
 \end{figure}
 \end{frame}
 
@@ -100,7 +100,7 @@
 
 
 \begin{frame}{Results: mean car waiting time}
-\textbf{Definition:} cars that cannot move to the next field, either to a 
+\textbf{Definition:} cars that cannot move to the next field, either by a 
 red traffic light or another car. Averaged over all lanes.\\~\\
 Measured using 200 cars simulating 5000 steps.
 
@@ -136,9 +136,9 @@ two sided & 13 & 12 & 12 & 7 & 4\\
 \begin{frame}{Conclusion}
 
 \begin{itemize}
- \item No trade-off between average waiting time and throughput, both decrease with increasing waiting time
+ \item Average waiting time and throughput are inversely related with increasing switch time
  \item Two sided algorithm performs better than the simple algorithm
- \item Car detection not yet tested, might yield other results
+ \item Other heuristics such as detection loops not yet tested, might yield other results
 \end{itemize}
 
     

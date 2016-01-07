@@ -1,3 +1,11 @@
+TODO:
+
+Maximum waiting time
+Loop detection (more algortihms)
+Asking info at the 
+
+
+
 
 Car
 -> x,y in grid
