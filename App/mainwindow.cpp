@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
   ui->trafficview->setState(sim->getIntersections());
   timer = new QTimer(this);
   connect(timer, SIGNAL(timeout()), this, SLOT(step()));
-  started = false;
   delay = 100;
 }
 
@@ -58,20 +57,17 @@ void MainWindow::on_TwoSidedOption_clicked() {
 
 void MainWindow::on_StartStopBtn_clicked() {
   qDebug() << "Start Stop clicked";
-  if (started) {
+  if (timer->isActive()) {
     timer->stop();
-    started = false;
     ui->StartStopBtn->setText("Start");
   } else {
-    // every 500 ms
     timer->start(delay);
-    started = true;
     ui->StartStopBtn->setText("Stop");
   }
 }
 void MainWindow::on_StepBtn_clicked() {
   qDebug() << "Step clicked";
-  if (!started) {
+  if (!timer->isActive()) {
     step();
   }
 }

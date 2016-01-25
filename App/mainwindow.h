@@ -31,7 +31,6 @@ private:
   Ui::MainWindow *ui;
   Simulation *sim;
   QTimer *timer;
-  bool started;
   int delay;
 };
 
