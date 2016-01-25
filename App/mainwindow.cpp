@@ -19,22 +19,23 @@ MainWindow::~MainWindow() {
   delete timer;
 }
 
-void MainWindow::step() {
-  sim->doSimulationStep();
-  ui->trafficview->setState(sim->getIntersections());
-  ui->CarsMoved->setText(QString::number(sim->getCarsMoved()));
-  ui->WaitTime->setText(QString::number(sim->getWaitTime()));
-  ui->Step->setText(QString::number(sim->getStepNumber()));
-  ui->Cars->setText(QString::number(sim->getCarsTotal()));
-}
-
-void MainWindow::on_ResetBtn_clicked() {
-    sim->resetSimulation();
+void MainWindow::updateUI()
+{
     ui->trafficview->setState(sim->getIntersections());
     ui->CarsMoved->setText(QString::number(sim->getCarsMoved()));
     ui->WaitTime->setText(QString::number(sim->getWaitTime()));
     ui->Step->setText(QString::number(sim->getStepNumber()));
     ui->Cars->setText(QString::number(sim->getCarsTotal()));
+}
+
+void MainWindow::step() {
+  sim->doSimulationStep();
+  updateUI();
+}
+
+void MainWindow::on_ResetBtn_clicked() {
+    sim->resetSimulation();
+    updateUI();
 }
 
 void MainWindow::on_GreenSlider_valueChanged(int value) {
@@ -60,14 +61,14 @@ void MainWindow::on_StartStopBtn_clicked() {
   if (timer->isActive()) {
     timer->stop();
     ui->StartStopBtn->setText("Start");
+    ui->StepBtn->setEnabled(true);
   } else {
     timer->start(delay);
     ui->StartStopBtn->setText("Stop");
+    ui->StepBtn->setEnabled(false);
   }
 }
 void MainWindow::on_StepBtn_clicked() {
   qDebug() << "Step clicked";
-  if (!timer->isActive()) {
-    step();
-  }
+  step();
 }

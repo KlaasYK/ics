@@ -32,6 +32,7 @@ private:
   Simulation *sim;
   QTimer *timer;
   int delay;
+  void updateUI();
 };
 
 #endif // MAINWINDOW_H
