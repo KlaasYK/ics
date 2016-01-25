@@ -22,7 +22,7 @@ Simulation::Simulation() {
   totalTime = 0;
   carsMovedTotal = 0;
   carIndex = 0;
-  algorithm = 0;
+  algorithm = LightType::SIMPLE;
   stepsGreen = 4;
 
   int i;

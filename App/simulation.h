@@ -22,7 +22,7 @@ public:
   void resetSimulation();
 
   int stepsGreen;
-  int algorithm;
+  LightType algorithm;
 
 private:
   int carIndex;

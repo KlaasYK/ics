@@ -15,6 +15,7 @@
 #define LEFT 3
 
 enum class Light {GREEN, RED};
+enum class LightType {SIMPLE, TWOSIDED};
 
 class Intersection
 {
@@ -23,11 +24,10 @@ public:
     QVector<Car*> getCars();
     QVector2D doSimulationStep();
 
-    void changeLights(int timestamp, int stepsGreen, int type);
+    void changeLights(int timestamp, int stepsGreen, LightType type);
 
     bool queueCar(Car* car, int sourceIntersection);
     void clearAllLanes();
-    void setLights(QVector<Light> nLights);
 
     int intersectionIndex;
     Intersection *connectedIntersections[4];

@@ -48,11 +48,11 @@ void MainWindow::on_StepDelay_valueChanged(int value) {
 }
 
 void MainWindow::on_SimpleOption_clicked() {
-    sim->algorithm = 0;
+    sim->algorithm = LightType::SIMPLE;
 }
 
 void MainWindow::on_TwoSidedOption_clicked() {
-    sim->algorithm = 1;
+    sim->algorithm = LightType::TWOSIDED;
 }
 
 void MainWindow::on_StartStopBtn_clicked() {
