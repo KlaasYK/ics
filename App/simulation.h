@@ -4,6 +4,7 @@
 #include <QVector>
 #include "car.h"
 #include "intersection.h"
+#include "stepstats.h"
 
 class Simulation {
 public:
@@ -17,6 +18,7 @@ public:
   int getCarsTotal();
   int getCarsMoved();
   int getWaitTime();
+  QVector<StepStats *> getStats();
 
   void doSimulationStep();
   void resetSimulation();
@@ -27,10 +29,11 @@ public:
 private:
   int carIndex;
   int currentTimestamp;
-  int totalTime;
-  int carsMovedTotal;
+  int sumQueueTime;
+  int dequeuedTotal;
   QVector<Intersection *> intersections;
   QVector<Car *> cars;
+  QVector<StepStats *> stats;
 };
 
 #endif // SIMULATION_H

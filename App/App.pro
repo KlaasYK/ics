@@ -23,7 +23,8 @@ HEADERS  += mainwindow.h \
     simulation.h \
     car.h \
     intersection.h \
-    customopenglwidget.h
+    customopenglwidget.h \
+    stepstats.h
 
 FORMS    += mainwindow.ui
 

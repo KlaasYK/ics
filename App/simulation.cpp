@@ -4,8 +4,8 @@
 
 void Simulation::resetSimulation() {
     currentTimestamp = 0;
-    totalTime = 0;
-    carsMovedTotal = 0;
+    sumQueueTime = 0;
+    dequeuedTotal = 0;
     carIndex = 0;
     for (int i = 0; i < 9; ++i)
     {
@@ -19,8 +19,8 @@ Simulation::Simulation() {
   intersections = QVector<Intersection *>();
 
   currentTimestamp = 0;
-  totalTime = 0;
-  carsMovedTotal = 0;
+  sumQueueTime = 0;
+  dequeuedTotal = 0;
   carIndex = 0;
   algorithm = LightType::SIMPLE;
   stepsGreen = 4;
@@ -93,14 +93,14 @@ int Simulation::getCarsTotal() { return cars.size(); }
 
 int Simulation::getCarsMoved() {
     if (currentTimestamp > 0) {
-        return carsMovedTotal / currentTimestamp;
+        return dequeuedTotal / currentTimestamp;
     } else {
         return 0;
     }}
 
 int Simulation::getWaitTime() {
-    if (carsMovedTotal > 0) {
-        return totalTime / carsMovedTotal;
+    if (dequeuedTotal > 0) {
+        return sumQueueTime / dequeuedTotal;
     } else {
         return 0;
     }
@@ -132,12 +132,16 @@ void Simulation::doSimulationStep() {
 
     // TODO: implement detection (or something similar), currently only timed
 
+    StepStats *stat = new StepStats(currentTimestamp, carIndex, 0, 8096, 0, 0);
+
     for (Intersection *inter : intersections) {
         inter->changeLights(currentTimestamp,stepsGreen, algorithm);
-        QVector2D q2d = inter->doSimulationStep();
-        totalTime += q2d.x();
-        carsMovedTotal += q2d.y();
+        inter->doSimulationStep(*stat);
     }
+
+    dequeuedTotal += stat->dequeuedCars;
+    sumQueueTime += stat->sumQueueTime;
+    stats.append(stat);
 
     currentTimestamp++;
 }
@@ -145,4 +149,9 @@ void Simulation::doSimulationStep() {
 Simulation::~Simulation() {
     cars.clear();
     intersections.clear();
+    stats.clear();
+}
+
+QVector<StepStats*> Simulation::getStats() {
+    return stats;
 }

@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include <QDebug>
+#include <QFileDialog>
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -56,19 +58,50 @@ void MainWindow::on_TwoSidedOption_clicked() {
     sim->algorithm = LightType::TWOSIDED;
 }
 
-void MainWindow::on_StartStopBtn_clicked() {
-  qDebug() << "Start Stop clicked";
-  if (timer->isActive()) {
+void MainWindow::stopTimer()
+{
     timer->stop();
     ui->StartStopBtn->setText("Start");
     ui->StepBtn->setEnabled(true);
+}
+
+void MainWindow::on_StartStopBtn_clicked() {
+  qDebug() << "Start Stop clicked";
+  if (timer->isActive()) {
+    stopTimer();
   } else {
     timer->start(delay);
     ui->StartStopBtn->setText("Stop");
     ui->StepBtn->setEnabled(false);
   }
 }
+
 void MainWindow::on_StepBtn_clicked() {
   qDebug() << "Step clicked";
   step();
+}
+
+void MainWindow::on_SaveStatsBtn_clicked() {
+  qDebug() << "SaveStatsBtn clicked";
+  if (timer->isActive()) {
+      stopTimer();
+  }
+  QString filename = QFileDialog::getSaveFileName(this, tr("Save stats"));
+  QFile file(filename);
+  if (file.open(QIODevice::WriteOnly)) {
+      QTextStream stream(&file);
+      stream << "step numCars dequeuedCars minQueueTime maxQueueTime sumQueueTime" << endl;
+      for (auto stat: sim->getStats()) {
+          QString min = "?";
+          QString max = "?";
+          if (stat->validMin) {
+              min = QString::number(stat->minQueueTime);
+          }
+          if (stat->validMax) {
+              max = QString::number(stat->maxQueueTime);
+          }
+          stream << stat->time << "\t" << stat->numCars << "\t" << stat->dequeuedCars << "\t";
+          stream << min << "\t" << max << "\t" << stat->sumQueueTime << endl;
+      }
+  }
 }

@@ -26,6 +26,7 @@ private slots:
   void on_TwoSidedOption_clicked();
   void on_GreenSlider_valueChanged(int value);
   void on_StepDelay_valueChanged(int value);
+  void on_SaveStatsBtn_clicked();
 
 private:
   Ui::MainWindow *ui;
@@ -33,6 +34,7 @@ private:
   QTimer *timer;
   int delay;
   void updateUI();
+  void stopTimer();
 };
 
 #endif // MAINWINDOW_H

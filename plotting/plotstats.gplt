@@ -1,0 +1,38 @@
+#!/usr/bin/gnuplot
+set terminal pngcairo size 1397,771 enhanced font 'Verdana,20'
+
+# define axis
+# remove border on top and right and set color to gray
+set style line 11 lc rgb '#808080' lt 1
+set border 3 back ls 11
+set tics nomirror
+# define grid
+set style line 12 lc rgb '#808080' lt 0 lw 1
+set grid back ls 12
+
+c1 = "0xE29F00"
+c2 = "0x009E73"
+c3 = "0x56B4E9"
+
+set autoscale x
+set autoscale y
+set key off
+
+set xlabel "Timestep"
+set ylabel ""
+
+set output 'minwait.png'
+set title "Minimum wait times"
+plot "data.txt" u (column("step")):(column("minQueueTime")) with lines lc rgbcolor c1 lw 4 title "Minimum wait time"
+
+set output 'avgwait.png'
+set title "Average wait times"
+plot "data.txt" u (column("step")):(column("sumQueueTime") / column("dequeuedCars")) with lines lc rgbcolor c1 lw 4 title "Average wait time"
+
+set output 'maxwait.png'
+set title "Maximum wait times"
+plot "data.txt" u (column("step")):(column("maxQueueTime")) with lines lc rgbcolor c1 lw 4 title "Maximum wait time"
+
+set output 'dequeued.png'
+set title "Cars passing the traffic lights"
+plot "data.txt" u (column("step")):(column("dequeuedCars")) with lines lc rgbcolor c1 lw 4 title "Dequeued cars"

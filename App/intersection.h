@@ -2,9 +2,9 @@
 #define INTERSECTION_H
 
 #include <QVector>
-#include <QVector2D>
 
 #include "car.h"
+#include "stepstats.h"
 
 // Amount of cars able to queue in lane
 #define LANE_LENGTH 8
@@ -22,7 +22,7 @@ class Intersection
 public:
     Intersection();
     QVector<Car*> getCars();
-    QVector2D doSimulationStep();
+    void doSimulationStep(StepStats &stat);
 
     void changeLights(int timestamp, int stepsGreen, LightType type);
 
