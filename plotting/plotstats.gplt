@@ -16,23 +16,27 @@ c3 = "0x56B4E9"
 
 set autoscale x
 set autoscale y
-set key off
+set key on bmargin horizontal
 
 set xlabel "Timestep"
 set ylabel ""
 
 set output 'minwait.png'
 set title "Minimum wait times"
-plot "data.txt" u (column("step")):(column("minQueueTime")) with lines lc rgbcolor c1 lw 4 title "Minimum wait time"
+plot "simple.txt" u (column("step")):(column("minQueueTime")) with lines lc rgbcolor c1 lw 4 title "Simple",\
+     "twosided.txt" u (column("step")):(column("minQueueTime")) with lines lc rgbcolor c2 lw 4 title "Two-sided",\
 
 set output 'avgwait.png'
 set title "Average wait times"
-plot "data.txt" u (column("step")):(column("sumQueueTime") / column("dequeuedCars")) with lines lc rgbcolor c1 lw 4 title "Average wait time"
+plot "simple.txt" u (column("step")):(column("sumQueueTime") / column("dequeuedCars")) with lines lc rgbcolor c1 lw 4 title "Simple",\
+     "twosided.txt" u (column("step")):(column("sumQueueTime") / column("dequeuedCars")) with lines lc rgbcolor c2 lw 4 title "Two-sided"
 
 set output 'maxwait.png'
 set title "Maximum wait times"
-plot "data.txt" u (column("step")):(column("maxQueueTime")) with lines lc rgbcolor c1 lw 4 title "Maximum wait time"
+plot "simple.txt" u (column("step")):(column("maxQueueTime")) with lines lc rgbcolor c1 lw 4 title "Simple",\
+     "twosided.txt" u (column("step")):(column("maxQueueTime")) with lines lc rgbcolor c2 lw 4 title "Two-sided"
 
 set output 'dequeued.png'
 set title "Cars passing the traffic lights"
-plot "data.txt" u (column("step")):(column("dequeuedCars")) with lines lc rgbcolor c1 lw 4 title "Dequeued cars"
+plot "simple.txt" u (column("step")):(column("dequeuedCars")) with lines lc rgbcolor c1 lw 4 title "Simple",\
+     "twosided.txt" u (column("step")):(column("dequeuedCars")) with lines lc rgbcolor c2 lw 4 title "Two-sided"
