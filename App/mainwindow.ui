@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="StepBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
+      <x>120</x>
+      <y>100</y>
       <width>85</width>
       <height>27</height>
      </rect>
@@ -348,8 +348,8 @@
    <widget class="QPushButton" name="ResetBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>100</y>
+      <x>120</x>
+      <y>20</y>
       <width>85</width>
       <height>27</height>
      </rect>
@@ -369,6 +369,41 @@
     </property>
     <property name="text">
      <string>Save stats</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="StepSizeEdit">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>60</y>
+      <width>85</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="inputMask">
+     <string>0000</string>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="StepsizeLabel">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>85</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Step size:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

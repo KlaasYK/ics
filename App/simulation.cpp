@@ -12,6 +12,7 @@ void Simulation::resetSimulation() {
         intersections[i]->clearAllLanes();
     }
     cars.clear();
+    stats.clear();
     srand(42);
 }
 

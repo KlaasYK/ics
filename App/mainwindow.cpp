@@ -31,7 +31,10 @@ void MainWindow::updateUI()
 }
 
 void MainWindow::step() {
-  sim->doSimulationStep();
+  int stepsize = ui->StepSizeEdit->text().toInt();
+  for (int i = 0; i < stepsize; i++) {
+      sim->doSimulationStep();
+  }
   updateUI();
 }
 
