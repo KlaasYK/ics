@@ -23,6 +23,8 @@ public:
   void doSimulationStep();
   void resetSimulation();
 
+  int numCars;
+
   int stepsGreen;
   LightType algorithm;
 

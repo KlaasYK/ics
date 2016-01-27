@@ -29,6 +29,7 @@ private slots:
   void on_GreenSlider_valueChanged(int value);
   void on_StepDelay_valueChanged(int value);
   void on_SaveStatsBtn_clicked();
+  void on_SetCars_clicked();
 
 private:
   Ui::MainWindow *ui;

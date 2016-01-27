@@ -23,6 +23,7 @@ Simulation::Simulation() {
   sumQueueTime = 0;
   dequeuedTotal = 0;
   carIndex = 0;
+  numCars = 100;
   algorithm = LightType::SIMPLE;
   stepsGreen = 4;
 
@@ -111,7 +112,7 @@ QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
 void Simulation::doSimulationStep() {
 
-    if (currentTimestamp < 20) {
+    if (currentTimestamp < numCars) {
         int inter, prev,r;
         Car *c = new Car(carIndex++,currentTimestamp);
         cars.append(c);

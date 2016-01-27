@@ -256,7 +256,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>150</y>
+      <y>130</y>
       <width>181</width>
       <height>201</height>
      </rect>
@@ -388,32 +388,13 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>370</y>
+      <y>380</y>
       <width>85</width>
       <height>27</height>
      </rect>
     </property>
     <property name="text">
      <string>Save stats</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="StepSizeEdit">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>60</y>
-      <width>85</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="inputMask">
-     <string>0000</string>
-    </property>
-    <property name="text">
-     <string>1</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="StepsizeLabel">
@@ -430,6 +411,63 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="NumCars">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>340</y>
+      <width>81</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>500</number>
+    </property>
+    <property name="singleStep">
+     <number>1</number>
+    </property>
+    <property name="value">
+     <number>100</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SetCars">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>340</y>
+      <width>85</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Set Cars</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="StepSizeEdit">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>60</y>
+      <width>81</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>9999</number>
+    </property>
+    <property name="singleStep">
+     <number>1</number>
+    </property>
+    <property name="value">
+     <number>1</number>
     </property>
    </widget>
   </widget>

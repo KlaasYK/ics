@@ -31,7 +31,7 @@ void MainWindow::updateUI()
 }
 
 void MainWindow::step() {
-  int stepsize = ui->StepSizeEdit->text().toInt();
+  int stepsize = ui->StepSizeEdit->value();
   for (int i = 0; i < stepsize; i++) {
       sim->doSimulationStep();
   }
@@ -70,6 +70,15 @@ void MainWindow::on_SimpleLoop_clicked() {
     sim->algorithm = LightType::SIMPLELOOP;
 }
 
+void MainWindow::on_SetCars_clicked()
+{
+    // Reset simulation, set number of cars
+    sim->resetSimulation();
+    sim->numCars = ui->NumCars->value();
+
+    updateUI();
+}
+
 void MainWindow::stopTimer()
 {
     timer->stop();
@@ -78,10 +87,12 @@ void MainWindow::stopTimer()
 }
 
 void MainWindow::on_StartStopBtn_clicked() {
-  qDebug() << "Start Stop clicked";
+
   if (timer->isActive()) {
+    qDebug() << "Stopped";
     stopTimer();
   } else {
+    qDebug() << "Started";
     timer->start(delay);
     ui->StartStopBtn->setText("Stop");
     ui->StepBtn->setEnabled(false);
@@ -89,7 +100,6 @@ void MainWindow::on_StartStopBtn_clicked() {
 }
 
 void MainWindow::on_StepBtn_clicked() {
-  qDebug() << "Step clicked";
   step();
 }
 
