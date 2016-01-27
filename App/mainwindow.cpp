@@ -61,6 +61,15 @@ void MainWindow::on_TwoSidedOption_clicked() {
     sim->algorithm = LightType::TWOSIDED;
 }
 
+void MainWindow::on_TwoSidedLoop_clicked()
+{
+    sim->algorithm = LightType::TWOSIDEDLOOP;
+}
+
+void MainWindow::on_SimpleLoop_clicked() {
+    sim->algorithm = LightType::SIMPLELOOP;
+}
+
 void MainWindow::stopTimer()
 {
     timer->stop();

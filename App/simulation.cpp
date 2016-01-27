@@ -111,7 +111,7 @@ QVector<Intersection *> Simulation::getIntersections() { return intersections; }
 
 void Simulation::doSimulationStep() {
 
-    if (currentTimestamp < 200) {
+    if (currentTimestamp < 20) {
         int inter, prev,r;
         Car *c = new Car(carIndex++,currentTimestamp);
         cars.append(c);

@@ -15,7 +15,7 @@
 #define LEFT 3
 
 enum class Light {GREEN, RED};
-enum class LightType {SIMPLE, TWOSIDED};
+enum class LightType {SIMPLE, TWOSIDED, SIMPLELOOP, TWOSIDEDLOOP};
 
 class Intersection
 {
@@ -42,6 +42,12 @@ private:
     int getLocalIntersectionIndex(int intersectionIndex, bool outside);
     void simple(int timestamp, int stepsGreen);
     void twoSided(int timestamp, int stepsGreen);
+    void simpleLoop(int timestamp, int stepsGreen);
+    void twoSidedLoop(int timestamp, int stepsGreen);
+
+    int loopStamp;
+    int loopLane;
+
 };
 
 #endif // INTERSECTION_H

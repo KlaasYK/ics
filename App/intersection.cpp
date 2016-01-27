@@ -8,6 +8,8 @@ Intersection::Intersection()
     for (int i = 0; i < 8; ++i) {
         lights.append(Light::RED);
     }
+    loopLane = 0;
+    loopStamp = 0;
 }
 
 void Intersection::changeLights(int timestamp, int stepsGreen, LightType type) {
@@ -22,7 +24,14 @@ void Intersection::changeLights(int timestamp, int stepsGreen, LightType type) {
     case LightType::TWOSIDED:
         twoSided(timestamp, stepsGreen);
         break;
+    case LightType::SIMPLELOOP:
+        simpleLoop(timestamp, stepsGreen);
+        break;
+    case LightType::TWOSIDEDLOOP:
+        twoSidedLoop(timestamp, stepsGreen);
+        break;
     }
+
 }
 
 void Intersection::simple(int timestamp, int stepsGreen)
@@ -37,6 +46,83 @@ void Intersection::twoSided(int timestamp, int stepsGreen)
     int lane = timestamp / stepsGreen % 4;
     lights[lane] = Light::GREEN;
     lights[(lane+4)%8] = Light::GREEN;
+}
+
+
+void Intersection::twoSidedLoop(int timestamp, int stepsGreen)
+{
+    int lane = loopLane;
+    // Switch when time is up
+    if(timestamp - loopStamp >= stepsGreen) {
+
+        loopLane = (loopLane+1)%4;
+        lane = loopLane;
+
+        // Loop detects car in front of lane
+        if (carsIndicesLane[lane][0] != -1 || carsIndicesLane[(lane + 4)%8][0] != -1)
+        {
+            // Current lane has a car, set to green
+            lights[lane] = Light::GREEN;
+            lights[(lane + 4)%8] = Light::GREEN;
+            loopStamp = timestamp;
+        } else {
+            // Check if there are cars in other lanes
+            for (int i = 0; i < 3; ++i) {
+                loopLane = (loopLane+1)%4;
+                lane = loopLane;
+                if (carsIndicesLane[lane][0] != -1 || carsIndicesLane[(lane + 4)%8][0] != -1)
+                {
+                    // Car detected, switch to green :)
+                    lights[lane] = Light::GREEN;
+                    lights[(lane + 4)%8] = Light::GREEN;
+                    loopStamp = timestamp;
+                    break; // Break out of the loop
+                }
+            }
+            // If none found, keep red, wait until a car arrives
+        } // End of chase
+    } else {
+        // Keep the light green until stepsGreen steps have passed
+        lights[lane] = Light::GREEN;
+        lights[(lane + 4)%8] = Light::GREEN;
+    }
+}
+
+void Intersection::simpleLoop(int timestamp, int stepsGreen)
+{
+    int lane = 2*loopLane;
+    // Switch when time is up
+    if(timestamp - loopStamp >= stepsGreen) {
+
+        loopLane = (loopLane+1)%4;
+        lane = 2*loopLane;
+
+        // Loop detects car in front of lane
+        if (carsIndicesLane[lane][0] != -1 || carsIndicesLane[lane + 1][0] != -1)
+        {
+            // Current lane has a car, set to green
+            lights[lane] = Light::GREEN;
+            lights[lane+1] = Light::GREEN;
+            loopStamp = timestamp;
+        } else {
+            // Check if there are cars in other lanes
+            for (int i = 0; i < 3; ++i) {
+                loopLane = (loopLane+1)%4;
+                lane = 2*loopLane;
+                if (carsIndicesLane[lane][0] != -1 || carsIndicesLane[lane + 1][0] != -1)
+                {
+                    lights[lane] = Light::GREEN;
+                    lights[lane+1] = Light::GREEN;
+                    loopStamp = timestamp;
+                    break; // Break out of the loop
+                }
+            }
+            // If none found, keep red, wait until a car arrives
+        } // End of chase
+    } else {
+        lights[lane] = Light::GREEN;
+        lights[lane+1] = Light::GREEN;
+    }
 }
 
 int Intersection::getLocalIntersectionIndex(int intersectionIndex, bool outside)
@@ -196,6 +282,8 @@ void Intersection::clearAllLanes()
     for (int i = 0; i < 8; ++i) {
         lights[i]=Light::RED;
     }
+    loopStamp = 0;
+    loopLane = 0;
 }
 
 

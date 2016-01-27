@@ -23,7 +23,9 @@ private slots:
   void on_StartStopBtn_clicked();
   void on_ResetBtn_clicked();
   void on_SimpleOption_clicked();
+  void on_SimpleLoop_clicked();
   void on_TwoSidedOption_clicked();
+  void on_TwoSidedLoop_clicked();
   void on_GreenSlider_valueChanged(int value);
   void on_StepDelay_valueChanged(int value);
   void on_SaveStatsBtn_clicked();
