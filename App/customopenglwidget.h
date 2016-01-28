@@ -26,7 +26,7 @@ private:
   void paintGrid();
   void paintIntersectionGrid(int intersection);
   void paintCars();
-  void paintCar();
+  void paintCar(Car *car);
 
   QColor getLightColor(int intersection, int lane);
 

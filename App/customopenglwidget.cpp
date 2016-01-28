@@ -126,19 +126,19 @@ void CustomOpenGLWidget::paintCars() {
       }
 #endif
       painter->translate(x, y);
-      paintCar();
+      paintCar(car);
       painter->restore();
     }
   }
 }
 
-void CustomOpenGLWidget::paintCar() {
+void CustomOpenGLWidget::paintCar(Car *car) {
   painter->save();
   painter->setPen(Qt::gray);
-  painter->setBrush(QBrush(QColor(0, 255, 255)));
+  painter->setBrush(QBrush(car->color));
   painter->drawRoundedRect(-10, -17, 20, 24, 4, 4);
-  painter->setPen(QPen(QColor(0, 255, 255), 1, Qt::SolidLine));
-  painter->setBrush(QBrush(QColor(0, 155, 255)));
+  painter->setPen(QPen(car->colorRoof, 1, Qt::SolidLine));
+  painter->setBrush(QBrush(car->colorRoof));
   painter->drawRoundedRect(-7, -15, 14, 15, 4, 4);
   painter->restore();
 }

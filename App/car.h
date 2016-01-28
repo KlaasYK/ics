@@ -1,6 +1,8 @@
 #ifndef CAR_H
 #define CAR_H
 
+#include <QColor>
+
 class Car
 {
 public:
@@ -17,6 +19,9 @@ public:
     // Timestamps
     int creationTimestamp;
     int laneTotalWaitTime;
+
+    QColor color;
+    QColor colorRoof;
 
 };
 
