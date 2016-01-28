@@ -85,6 +85,12 @@ void Intersection::twoSidedLoop(int timestamp, int stepsGreen)
         // Keep the light green until stepsGreen steps have passed
         lights[lane] = Light::GREEN;
         lights[(lane + 4)%8] = Light::GREEN;
+        if (carsIndicesLane[lane][0] == -1 && carsIndicesLane[(lane + 4)%8][0] == -1) {
+            // or no more cars are present, switch in the next step
+            // (this simulates the behaviour of traffic lights just turning red
+            // before you reach the loop detection
+            loopStamp = -1*stepsGreen;
+        }
     }
 }
 
@@ -122,6 +128,9 @@ void Intersection::simpleLoop(int timestamp, int stepsGreen)
     } else {
         lights[lane] = Light::GREEN;
         lights[lane+1] = Light::GREEN;
+        if (carsIndicesLane[lane][0] == -1 && carsIndicesLane[lane + 1][0] == -1) {
+            loopStamp = -1*stepsGreen;
+        }
     }
 }
 
