@@ -3,7 +3,48 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{url}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstdefinelanguage{pseudo}
+{
+  morekeywords={set,mod,div, if, else, end, to, foreach, then, loop},
+  sensitive=false,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+}
+
+\lstset {
+ backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize\ttfamily,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\bfseries\color{blue}, % keyword style
+  language=pseudo,                 % the language of the code
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+}
+
+
+
 \usepackage[utf8]{inputenc}
+
+
 
 
 \title{Optimizing Trafic Light algorithms in Urban Street Grids\\
@@ -41,12 +82,76 @@ Wiering \cite{Wiering00}
 \subsection{Grid of intersections}
 
 \subsection{Algorithms}
+% TODO: dit is nog maar een beginnetje, kan misschien nog wat uitgebreider
+
+For this assignment two different algorithms will be used.
+There will also be a version of both algorithms with loop detection.
+A time stamp will be used as an input for each of the algorithms, along
+with a variable for setting the amount of time steps for a light to switch.
 
 \subsubsection*{Simple}
+The simple algorithm is based on old-fashioned traffic handling by
+a human in the center of the intersection pointing at the lane which may move.
+At each time step, one of the four directions will get the green light and cars can move.
+After a given amount of time steps, the next direction will be set to green and the current direction set to red.
+In pseudo code:
+
+\begin{lstlisting}
+SET direction TO (time stamp DIV switch time) MOD number of directions
+SET lights of lanes in direction TO green
+\end{lstlisting}
+
 
 \subsubsection*{Two Sided}
+The two sided algorithm uses the fact that two opposing lanes can move at the same time.
+Cars moving straight forward or turning right can move at the same time as the cars on the
+opposing lane moving forward and right. The same is true for the lane turning left.
+In pseudo code:
+
+\begin{lstlisting}
+SET direction TO (time stamp DIV switch time) MOD number of directions
+SET light of the lane in the direction TO green
+SET the light in the opposing lane TO green
+\end{lstlisting}
 
 \subsection*{Loop detection}
+The loop detection can be applied to both of the previous algorithms.
+For this, each traffic light need to keep track of which lanes currently have green light
+and at what time stamp the last change happened.
+It also needs to keep track of the front of each lane and whether a car is present in it.
+It will only set lights to green if the next lanes according to the algorithm are not empty.
+If it encounters an empty lane, it will look for the next lane.
+If the next lane is not empty, set those lights to green.
+If all lanes are empty, keep all lights red and wait for a car to appear.
+If the change time has not yet expired, check if there are still cars present.
+If not, schedule a new change.
+In pseudo code:
+
+\begin{lstlisting}
+SET direction TO stored direction
+IF time stamp - last change time >= switch time THEN
+  SET direction TO direction from algorithm
+  IF front of lanes are filled THEN
+    SET lights of the lanes from the algorithm TO green
+    SET last change time TO time stamp
+    SET stored direction TO direction
+  ELSE
+    FOREACH other direction
+      IF front of other lanes in direction is filled THEN
+        SET lights of that direction TO green
+        SET last change time TO time stamp
+        SET stored direction TO direction
+        END LOOP
+ELSE
+  IF front of lanes in direction are empty THEN
+    SET last change time TO time stamp - switch time
+
+  
+	
+  
+\end{lstlisting}
+
+
 
 \section{Implementation}
 % realisation
@@ -58,6 +163,13 @@ Wiering \cite{Wiering00}
 
 
 \subsection{Future work}
+
+\begin{itemize}
+ \item Setting chance choosing between the left lane or the other independently. Now all is equal %Klaas
+ \item Giving cars incentive to drive to a certain destination
+ \item Make the amount of cars change over time (rush hour effect)
+\end{itemize}
+
 
 \bibliographystyle{acm}
 
