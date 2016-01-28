@@ -8,27 +8,28 @@
 
 CustomOpenGLWidget::CustomOpenGLWidget(QWidget *Parent)
     : QOpenGLWidget(Parent) {
-  painter = new QPainter();
-  setBackgroundRole(QPalette::Base);
-  setAutoFillBackground(true);
+    painter = new QPainter();
+    setBackgroundRole(QPalette::Base);
+    setAutoFillBackground(true);
 }
 
 CustomOpenGLWidget::~CustomOpenGLWidget() { delete painter; }
 
 void CustomOpenGLWidget::setState(QVector<Intersection *> intersections) {
-  this->intersections = intersections;
-  update();
+    this->intersections = intersections;
+    update();
 }
 
 void CustomOpenGLWidget::paintEvent(QPaintEvent *event) {
-  painter->begin(this);
-  painter->setRenderHint(QPainter::Antialiasing, true);
-  // make sure the drawing area is square
-  int side = qMin(width(), height());
-  painter->scale(side / (120.0 * 9), side / (120.0 * 9));
-  paintGrid();
-  paintCars();
-  painter->end();
+    Q_UNUSED(event);
+    painter->begin(this);
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    // make sure the drawing area is square
+    int side = qMin(width(), height());
+    painter->scale(side / (120.0 * 9), side / (120.0 * 9));
+    paintGrid();
+    paintCars();
+    painter->end();
 }
 
 void CustomOpenGLWidget::paintGrid() {
@@ -133,12 +134,12 @@ void CustomOpenGLWidget::paintCars() {
 }
 
 void CustomOpenGLWidget::paintCar(Car *car) {
-  painter->save();
-  painter->setPen(Qt::gray);
-  painter->setBrush(QBrush(car->color));
-  painter->drawRoundedRect(-10, -17, 20, 24, 4, 4);
-  painter->setPen(QPen(car->colorRoof, 1, Qt::SolidLine));
-  painter->setBrush(QBrush(car->colorRoof));
-  painter->drawRoundedRect(-7, -15, 14, 15, 4, 4);
-  painter->restore();
+    painter->save();
+    painter->setPen(Qt::gray);
+    painter->setBrush(QBrush(car->color));
+    painter->drawRoundedRect(-10, -17, 20, 24, 4, 4);
+    painter->setPen(QPen(car->colorRoof, 1, Qt::SolidLine));
+    painter->setBrush(QBrush(car->colorRoof));
+    painter->drawRoundedRect(-7, -15, 14, 15, 4, 4);
+    painter->restore();
 }

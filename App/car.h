@@ -7,7 +7,6 @@ class Car
 {
 public:
     Car(int carIndex, int currentTimestamp);
-    ~Car();
 
     int index;
 

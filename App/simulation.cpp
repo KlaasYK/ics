@@ -17,76 +17,76 @@ void Simulation::resetSimulation() {
 }
 
 Simulation::Simulation() {
-  intersections = QVector<Intersection *>();
+    intersections = QVector<Intersection *>();
 
-  currentTimestamp = 0;
-  sumQueueTime = 0;
-  dequeuedTotal = 0;
-  carIndex = 0;
-  numCars = 100;
-  algorithm = LightType::SIMPLE;
-  stepsGreen = 4;
+    currentTimestamp = 0;
+    sumQueueTime = 0;
+    dequeuedTotal = 0;
+    carIndex = 0;
+    numCars = 100;
+    algorithm = LightType::SIMPLE;
+    stepsGreen = 4;
 
-  int i;
-  Intersection *inter;
+    int i;
+    Intersection *inter;
 
-  // Create the 9 intersections
-  // Form left to right top to bottom
+    // Create the 9 intersections
+    // Form left to right top to bottom
 
-  for (i = 0; i < 9; ++i)
-  {
+    for (i = 0; i < 9; ++i)
+    {
       inter = new Intersection();
       inter->intersectionIndex = i;
       inter->clearAllLanes();
       intersections.append(inter);
-  }
+    }
 
-  intersections.at(0)->connectedIntersections[TOP] = intersections.at(6);
-  intersections.at(0)->connectedIntersections[RIGHT] = intersections.at(1);
-  intersections.at(0)->connectedIntersections[BOTTOM] = intersections.at(3);
-  intersections.at(0)->connectedIntersections[LEFT] = intersections.at(2);
+    intersections.at(0)->connectedIntersections[TOP] = intersections.at(6);
+    intersections.at(0)->connectedIntersections[RIGHT] = intersections.at(1);
+    intersections.at(0)->connectedIntersections[BOTTOM] = intersections.at(3);
+    intersections.at(0)->connectedIntersections[LEFT] = intersections.at(2);
 
-  intersections.at(1)->connectedIntersections[TOP] = intersections.at(7);
-  intersections.at(1)->connectedIntersections[RIGHT] = intersections.at(2);
-  intersections.at(1)->connectedIntersections[BOTTOM] = intersections.at(4);
-  intersections.at(1)->connectedIntersections[LEFT] = intersections.at(0);
+    intersections.at(1)->connectedIntersections[TOP] = intersections.at(7);
+    intersections.at(1)->connectedIntersections[RIGHT] = intersections.at(2);
+    intersections.at(1)->connectedIntersections[BOTTOM] = intersections.at(4);
+    intersections.at(1)->connectedIntersections[LEFT] = intersections.at(0);
 
-  intersections.at(2)->connectedIntersections[TOP] = intersections.at(8);
-  intersections.at(2)->connectedIntersections[RIGHT] = intersections.at(0);
-  intersections.at(2)->connectedIntersections[BOTTOM] = intersections.at(5);
-  intersections.at(2)->connectedIntersections[LEFT] = intersections.at(1);
+    intersections.at(2)->connectedIntersections[TOP] = intersections.at(8);
+    intersections.at(2)->connectedIntersections[RIGHT] = intersections.at(0);
+    intersections.at(2)->connectedIntersections[BOTTOM] = intersections.at(5);
+    intersections.at(2)->connectedIntersections[LEFT] = intersections.at(1);
 
-  intersections.at(3)->connectedIntersections[TOP] = intersections.at(0);
-  intersections.at(3)->connectedIntersections[RIGHT] = intersections.at(4);
-  intersections.at(3)->connectedIntersections[BOTTOM] = intersections.at(6);
-  intersections.at(3)->connectedIntersections[LEFT] = intersections.at(5);
+    intersections.at(3)->connectedIntersections[TOP] = intersections.at(0);
+    intersections.at(3)->connectedIntersections[RIGHT] = intersections.at(4);
+    intersections.at(3)->connectedIntersections[BOTTOM] = intersections.at(6);
+    intersections.at(3)->connectedIntersections[LEFT] = intersections.at(5);
 
-  intersections.at(4)->connectedIntersections[TOP] = intersections.at(1);
-  intersections.at(4)->connectedIntersections[RIGHT] = intersections.at(5);
-  intersections.at(4)->connectedIntersections[BOTTOM] = intersections.at(7);
-  intersections.at(4)->connectedIntersections[LEFT] = intersections.at(3);
+    intersections.at(4)->connectedIntersections[TOP] = intersections.at(1);
+    intersections.at(4)->connectedIntersections[RIGHT] = intersections.at(5);
+    intersections.at(4)->connectedIntersections[BOTTOM] = intersections.at(7);
+    intersections.at(4)->connectedIntersections[LEFT] = intersections.at(3);
 
-  intersections.at(5)->connectedIntersections[TOP] = intersections.at(2);
-  intersections.at(5)->connectedIntersections[RIGHT] = intersections.at(3);
-  intersections.at(5)->connectedIntersections[BOTTOM] = intersections.at(8);
-  intersections.at(5)->connectedIntersections[LEFT] = intersections.at(4);
+    intersections.at(5)->connectedIntersections[TOP] = intersections.at(2);
+    intersections.at(5)->connectedIntersections[RIGHT] = intersections.at(3);
+    intersections.at(5)->connectedIntersections[BOTTOM] = intersections.at(8);
+    intersections.at(5)->connectedIntersections[LEFT] = intersections.at(4);
 
-  intersections.at(6)->connectedIntersections[TOP] = intersections.at(3);
-  intersections.at(6)->connectedIntersections[RIGHT] = intersections.at(7);
-  intersections.at(6)->connectedIntersections[BOTTOM] = intersections.at(0);
-  intersections.at(6)->connectedIntersections[LEFT] = intersections.at(8);
+    intersections.at(6)->connectedIntersections[TOP] = intersections.at(3);
+    intersections.at(6)->connectedIntersections[RIGHT] = intersections.at(7);
+    intersections.at(6)->connectedIntersections[BOTTOM] = intersections.at(0);
+    intersections.at(6)->connectedIntersections[LEFT] = intersections.at(8);
 
-  intersections.at(7)->connectedIntersections[TOP] = intersections.at(4);
-  intersections.at(7)->connectedIntersections[RIGHT] = intersections.at(8);
-  intersections.at(7)->connectedIntersections[BOTTOM] = intersections.at(1);
-  intersections.at(7)->connectedIntersections[LEFT] = intersections.at(6);
+    intersections.at(7)->connectedIntersections[TOP] = intersections.at(4);
+    intersections.at(7)->connectedIntersections[RIGHT] = intersections.at(8);
+    intersections.at(7)->connectedIntersections[BOTTOM] = intersections.at(1);
+    intersections.at(7)->connectedIntersections[LEFT] = intersections.at(6);
 
-  intersections.at(8)->connectedIntersections[TOP] = intersections.at(5);
-  intersections.at(8)->connectedIntersections[RIGHT] = intersections.at(6);
-  intersections.at(8)->connectedIntersections[BOTTOM] = intersections.at(2);
-  intersections.at(8)->connectedIntersections[LEFT] = intersections.at(7);
+    intersections.at(8)->connectedIntersections[TOP] = intersections.at(5);
+    intersections.at(8)->connectedIntersections[RIGHT] = intersections.at(6);
+    intersections.at(8)->connectedIntersections[BOTTOM] = intersections.at(2);
+    intersections.at(8)->connectedIntersections[LEFT] = intersections.at(7);
 
-  srand(42);
+    srand(42);
 }
 
 int Simulation::getStepNumber() { return currentTimestamp; }
@@ -130,9 +130,6 @@ void Simulation::doSimulationStep() {
             }
         } while (!intersections.at(inter)->queueCar(c,prev));
     }
-
-
-    // TODO: implement detection (or something similar), currently only timed
 
     StepStats *stat = new StepStats(currentTimestamp, carIndex, 0, 8096, 0, 0);
 

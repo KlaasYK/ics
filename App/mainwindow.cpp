@@ -7,18 +7,18 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
-  ui->setupUi(this);
-  sim = new Simulation();
-  ui->trafficview->setState(sim->getIntersections());
-  timer = new QTimer(this);
-  connect(timer, SIGNAL(timeout()), this, SLOT(step()));
-  delay = 100;
+    ui->setupUi(this);
+    sim = new Simulation();
+    ui->trafficview->setState(sim->getIntersections());
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(step()));
+    delay = 100;
 }
 
 MainWindow::~MainWindow() {
-  delete sim;
-  delete ui;
-  delete timer;
+    delete sim;
+    delete ui;
+    delete timer;
 }
 
 void MainWindow::updateUI()
@@ -31,11 +31,11 @@ void MainWindow::updateUI()
 }
 
 void MainWindow::step() {
-  int stepsize = ui->StepSizeEdit->value();
-  for (int i = 0; i < stepsize; i++) {
-      sim->doSimulationStep();
-  }
-  updateUI();
+    int stepsize = ui->StepSizeEdit->value();
+    for (int i = 0; i < stepsize; i++) {
+        sim->doSimulationStep();
+    }
+    updateUI();
 }
 
 void MainWindow::on_ResetBtn_clicked() {
@@ -88,15 +88,15 @@ void MainWindow::stopTimer()
 
 void MainWindow::on_StartStopBtn_clicked() {
 
-  if (timer->isActive()) {
-    qDebug() << "Stopped";
-    stopTimer();
-  } else {
-    qDebug() << "Started";
-    timer->start(delay);
-    ui->StartStopBtn->setText("Stop");
-    ui->StepBtn->setEnabled(false);
-  }
+    if (timer->isActive()) {
+        qDebug() << "Stopped";
+        stopTimer();
+    } else {
+        qDebug() << "Started";
+        timer->start(delay);
+        ui->StartStopBtn->setText("Stop");
+        ui->StepBtn->setEnabled(false);
+    }
 }
 
 void MainWindow::on_StepBtn_clicked() {
@@ -104,26 +104,28 @@ void MainWindow::on_StepBtn_clicked() {
 }
 
 void MainWindow::on_SaveStatsBtn_clicked() {
-  qDebug() << "SaveStatsBtn clicked";
-  if (timer->isActive()) {
+    qDebug() << "SaveStatsBtn clicked";
+    if (timer->isActive()) {
       stopTimer();
-  }
-  QString filename = QFileDialog::getSaveFileName(this, tr("Save stats"));
-  QFile file(filename);
-  if (file.open(QIODevice::WriteOnly)) {
-      QTextStream stream(&file);
-      stream << "step numCars dequeuedCars minQueueTime maxQueueTime sumQueueTime" << endl;
-      for (auto stat: sim->getStats()) {
-          QString min = "?";
-          QString max = "?";
-          if (stat->validMin) {
-              min = QString::number(stat->minQueueTime);
-          }
-          if (stat->validMax) {
-              max = QString::number(stat->maxQueueTime);
-          }
-          stream << stat->time << "\t" << stat->numCars << "\t" << stat->dequeuedCars << "\t";
-          stream << min << "\t" << max << "\t" << stat->sumQueueTime << endl;
-      }
-  }
+    }
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save stats"));
+    QFile file(filename);
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream stream(&file);
+        stream << "step numCars dequeuedCars minQueueTime maxQueueTime sumQueueTime" << endl;
+        for (auto stat: sim->getStats()) {
+            QString min = "?";
+            QString max = "?";
+            if (stat->validMin) {
+                min = QString::number(stat->minQueueTime);
+            }
+            if (stat->validMax) {
+                max = QString::number(stat->maxQueueTime);
+            }
+            stream << stat->time << "\t" << stat->numCars << "\t" << stat->dequeuedCars << "\t";
+            stream << min << "\t" << max << "\t" << stat->sumQueueTime << endl;
+        }
+        // Closing ;)
+        file.close();
+    }
 }
