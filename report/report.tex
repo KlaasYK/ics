@@ -84,7 +84,7 @@ Sometimes traffic lights work well, but sometimes it yields a green light for an
 This may not only lead to irritation, but also to dangerous situations if someone decides to ignore the traffic light out of frustration with the traffic light switching algorithm.
 In addition bad traffic light switching algorithms also affect the flow of traffic on a larger scale than a single traffic light.
 
-Some effort has been put into researching algortihms and into simulating and using machine learning techniques for determining the best possible algorithms.
+Some effort has been put into researching algorithms and into simulating and using machine learning techniques for determining the best possible algorithms.
 Instead of using a complex algorithm, this report evaluates the performance of regular time-based approaches and simple loop detection.
 
 \subsubsection*{Outline of this report}
@@ -97,9 +97,8 @@ In the appendix Section \ref{app:rtables} contains tables with statistics for si
 
 \section{Related work}\label{sec:rel}
 
-
 The paper by Wiering \cite{Wiering00} describes a global algorithm for traffic light switching.
-This algorithm is based on multi-agent reinforcement learning to minimize the overal waiting time of cars in the city.
+This algorithm is based on multi-agent reinforcement learning to minimize the overall waiting time of cars in the city.
 Which basically means that the traffic lights strive as a group to minimize the waiting time by finding a good switching algorithm.
 Wiering found that in his simulations that a reinforcement learning algorithm can outperform traditional non-adaptable systems.
 
@@ -110,7 +109,7 @@ To simplify the calculations and to keep the scope small our simulation will abs
 Therefore we place the following restrictions on the simulation.
 
 Firstly the simulation will only consider cars, there is no other traffic and thus no biking lanes or pedestrian lights.
-The reason is that car trafic by itself can be made quite complex already.
+The reason is that car traffic by itself can be made quite complex already.
 Secondly to reduce this complexity all cars will be considered all equal.
 So there is no difference between a large truck and small car.
 We choose this restriction to simplify the implementation.
@@ -230,9 +229,9 @@ The lanes are then represented by queues for 8 cars, these queues are also store
 The most complex code is in the intersection class, which contains all the switching algorithms.
 The rest is rather trivial.
 Also note that a random numbers generator is used in our application.
-While this can reduce the reproducability of the results, this is not the case here because the seed is fixed.
-Sadly there is a bug somewhere, so to get reproducable results one has to press the reset button first.
-A screenshot of the application can be seen in Figure \ref{fig:screenshot}.
+While this can reduce the reproducibility of the results, this is not the case here because the seed is fixed.
+Sadly there is a bug somewhere, so to get reproducible results one has to press the reset button first.
+A screen-shot of the application can be seen in Figure \ref{fig:screenshot}.
 
 \begin{figure}[H]
   \centering
@@ -261,7 +260,7 @@ Another thing to note is that in the beginning the maximum wait time is not yet 
 Therefore in all our measurements we only use the last $40\%$ of the steps to make sure the system is equilibrium.
 To measure the throughput we keep track of how many cars move through the intersection and then average it over the number of steps.
 And to measure the waiting times we choose to keep track of the minimum, the maximum and the average waiting time.
-As shown in the image above the minimum/maximum waiting times by themselfs are not easy to compare, so we choose to average them.
+As shown in the image above the minimum/maximum waiting times by them selfs are not easy to compare, so we choose to average them.
 Note that this is not an entirely realistic measure, since it does not show the spread of the maximum wait times.
 We do feel however that this is a good indicator.
 
@@ -271,7 +270,7 @@ Therefore we varied the number of cars and the switching times.
 The number of cars used is: 50, 100 and 200.
 By changing the number of cars we try to simulate different densities of traffic.
 The different switch times used were: 2, 4, 8, 16 and 32.
-These were chosen since they were either a $\frac{1}{4}$, $\frac{1}{2}$, 1, 2 or 4 times the length of the lanes (8) and we expect this to influence the efficientcy of the algorithms.
+These were chosen since they were either a $\frac{1}{4}$, $\frac{1}{2}$, 1, 2 or 4 times the length of the lanes (8) and we expect this to influence the efficiency of the algorithms.
 To make sure that at the end of the simulation it is in an equilibrium state, we ran the simulation for 500 steps.
 And to get consistent results, the random generators are seeded with the same seed for each run.
 
@@ -340,20 +339,20 @@ So to model how peaks of high traffic are dealt with.
 
 The implementation could be improved by making it more efficient and more flexible in the sense that it may be nice to handle more and different cars.
 One point of interest is the simulation of the traffic.
-Currently the lanes the car chooses to go into are choosen at random.
+Currently the lanes the car chooses to go into are chosen at random.
 This is not very realistic and maybe the car should have a preset destination it wishes to reach.
 The cars then could also have an incentive to drive a certain route.
 By making the traffic more realistic we hope that the results of the algorithm also improve.
 By moving away from a grid to a graph the distances and the travel time could become more realistic and at the same time allow to test more diverse situations.
-One could for example focus on the situation in groningen in particular the find just the right algorithm for their traffic lights.
+One could for example focus on the situation in Groningen in particular the find just the right algorithm for their traffic lights.
 
 Lastly the methodology used to compare the algorithms is not perfect.
 Take for example the throughput of the intersections.
 It may not be independent of the density of the traffic, however just taking the average does not take this in account.
-Maybe it should be normalized by the car density or maybe a different statistic altogether makes for a better comparison for example the commulative throughput.
+Maybe it should be normalized by the car density or maybe a different statistic altogether makes for a better comparison for example the cumulative throughput.
 The switching time may also influence the throughput by staying too long on green for example.
 This was however not investigated and also not accounted for when we calculated the statistics.
-Maybe it is fairer to compare the traffic lights over the same ammount of cycles.
+Maybe it is fairer to compare the traffic lights over the same amount of cycles.
 
 Taking the average of maximum and minimum waiting times also is not a great solution, since we are also interested in the maxima and minima of those.
 One possible solution would be to calculate the variance too, so that one could say something about the spread of the values.
