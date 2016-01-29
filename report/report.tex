@@ -281,8 +281,20 @@ The resulting statistics can be found in Section \ref{app:rtables} in the append
 % TODO: evalution and discussion of the results
 
 \subsubsection*{Patterns}
+When using the two sided algorithm, a pattern emerges when the switch time is set to a large value (50 for example).
+Since the lane straight ahead, turning right is alternated with the lane turning left and all traffic lights are
+synced all cars eventually end up in the same direction: either horizontal or vertical.
+This behavior can be seen in Figure \ref{fig:pattern}.
 
-% TODO: describe the pattern emerging with two sided, long switch time
+\begin{figure}[H]
+  \centering
+  \begin{tabular}{cc}
+  \includegraphics[width=.45\linewidth]{img/vertical.png} & \includegraphics[width=.45\linewidth]{img/horizontal.png}\\
+  The vertical state & The horizontal state\\
+  \end{tabular}
+  \caption{Alternating horizontal and vertical patterns.}
+  \label{fig:pattern}
+\end{figure}
 
 \section{Conclusion}\label{sec:conclusion}
 
