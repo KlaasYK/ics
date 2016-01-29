@@ -80,9 +80,11 @@
 % TODO: reread this ;)
 Waiting is never fun, especially if you have to get somewhere by car and you are encountering a red traffic light.
 Sometimes traffic lights work well, but sometimes it yields a green light for an empty lane, while another lane is packed with cars.
-Some research on this topic has been done into simulating and using machine learning techniques for determining the best
-possible algorithms.
-Instead of using a complex algorithm, we try to evaluate the performance of regular time-based approaches and simple loop detection.
+This may not only lead to irritation, but also to dangerous situations if someone decides to ignore the traffic light out of frustration with the traffic light switching algorithm.
+In addition bad traffic light switching algorithms also affect the flow of traffic on a larger scale than a single traffic light.
+
+Some effort has been put into researching algortihms and into simulating and using machine learning techniques for determining the best possible algorithms.
+Instead of using a complex algorithm, this report evaluates the performance of regular time-based approaches and simple loop detection.
 
 \subsubsection*{Outline of this report}
 Section \ref{sec:rel} discusses the use of reinforcement learning for traffic light algorithms.
@@ -90,26 +92,33 @@ Section \ref{sec:concept} describes the concept of our simulation.
 Section \ref{sec:implementation} goes into to implementation details of the concept.
 Section \ref{sec:results} describes the testing set-up used and shows the experimental results.
 Section \ref{sec:eval} discusses the results and Section \ref{sec:conclusion} concludes.
+In the appendix Section \ref{app:rtables} contains tables with statistics for simulations with various parameters.
 
 \section{Related work}\label{sec:rel}
 
-% TODO: Wiering (see the document inside the git repo)
-Wiering \cite{Wiering00} describes a method of using reinforcement learning for
-traffic light controllers and co-learning with the cars.
 
+The paper by Wiering \cite{Wiering00} describes a global algorithm for traffic light switching.
+This algorithm is based on multi-agent reinforcement learning to minimize the overal waiting time of cars in the city.
+Which basically means that the traffic lights strive as a group to minimize the waiting time by finding a good switching algorithm.
+Wiering found that in his simulations that a reinforcement learning algorithm can outperform traditional non-adaptable systems.
 
 \section{Concept}\label{sec:concept}
-% TODO: dit is nog maar een beginnetje, kan misschien nog wat uitgebreider
 
-Instead of complex adaptive learning algorithms, a simple approach is used.
-The simulation will abstract from the reality to simplify the calculations.
-The simulation will only consider cars, there are no biking lanes or pedestrian lights.
-In the simulation cars will be considered all equal.
-There is no difference between a large truck and small car.
-Cars do not have complex behavior, they just drive forward and choose randomly which lane to pick when
-entering an intersection.
-The roads will be considered a grid, in which each car takes up exactly one grid space.
-Time will be discretized by allowing cars one action per time-step:
+Instead of complex adaptive learning algorithms, simple algorithms are used in this report.
+To simplify the calculations and to keep the scope small our simulation will abstract from the reality.
+Therefore we place the following restrictions on the simulation.
+
+Firstly the simulation will only consider cars, there is no other traffic and thus no biking lanes or pedestrian lights.
+The reason is that car trafic by itself can be made quite complex already.
+Secondly to reduce this complexity all cars will be considered all equal.
+So there is no difference between a large truck and small car.
+We choose this restriction to simplify the implementation.
+In addition cars do not have complex behavior, they just drive forward and choose randomly which lane to pick when entering an intersection.
+
+Thirdly we simplify the traffic network, since it normally can take a quite organic shape.
+This organic shape is hard to model and often unique to a city.
+So the roads will be generalized to a grid, in which each car takes up exactly one grid space.
+Time will be discretized by allowing cars one action per time step:
 \begin{itemize}
  \item If not in front of light: move forward one space in the current grid if the next grid space is empty, otherwise wait.
  \item If in front of light: move to the next grid space when the light is green, otherwise wait
@@ -259,5 +268,280 @@ To get consistent results, the random generators are seeded with the same seed f
 
 \bibliography{refs}
 
+\appendix
+\section{Result tables}\label{app:rtables}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 0.049751 & 0.21393 & 0.39801 \\
+4 & 0.16418 & 0.26368 & 0.50249 \\
+8 & 0.19403 & 0.35323 & 0.32836 \\
+16 & 0.19403 & 0.33333 & 0.55721 \\
+32 & 0.19403 & 0.33333 & 0.25871 \\
+\hline
+\end{tabular}
+\caption{Average minimum queue time for the simple loop algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 1.5822 & 3.301 & 6.9473 \\
+4 & 2.0785 & 4.2088 & 7.357 \\
+8 & 2.0209 & 4.6099 & 8.8599 \\
+16 & 2.0209 & 4.6005 & 9.7013 \\
+32 & 2.0209 & 4.6005 & 11.136 \\
+\hline
+\end{tabular}
+\caption{Average queue time for the simple loop algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 3.8408 & 7.9751 & 17.866 \\
+4 & 5.0348 & 9.6169 & 16.716 \\
+8 & 4.9104 & 10.209 & 19.259 \\
+16 & 4.9104 & 10.358 & 22.612 \\
+32 & 4.9104 & 10.358 & 29.373 \\
+\hline
+\end{tabular}
+\caption{Average maximum queue time for the simple loop algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 5.4776 & 9.2736 & 13.871 \\
+4 & 5.199 & 8.5522 & 13.448 \\
+8 & 5.2438 & 8.2388 & 12.214 \\
+16 & 5.2438 & 8.2687 & 11.592 \\
+32 & 5.2438 & 8.2687 & 10.796 \\
+\hline
+\end{tabular}
+\caption{Average throughput for the simple loop algorithm}
+\end{table}
+
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 0.089552 & 0.16915 & 0.59204 \\
+4 & 0.1592 & 0.39801 & 0.46269 \\
+8 & 0.21393 & 0.37811 & 0.60199 \\
+16 & 0.21393 & 0.31841 & 0.47761 \\
+32 & 0.21393 & 0.31841 & 0.47761 \\
+\hline
+\end{tabular}
+\caption{Average minimum queue time for the two-sided loop algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 1.3433 & 3.1006 & 6.7539 \\
+4 & 1.713 & 4.0883 & 7.5746 \\
+8 & 1.9167 & 4.6661 & 9.0356 \\
+16 & 1.9167 & 4.789 & 9.1792 \\
+32 & 1.9167 & 4.789 & 9.1792 \\
+\hline
+\end{tabular}
+\caption{Average queue time for the two-sided loop algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 3.4179 & 7.8159 & 17.204 \\
+4 & 4.2786 & 9.0498 & 17.418 \\
+8 & 4.6169 & 10.751 & 18.97 \\
+16 & 4.6169 & 10.891 & 21.095 \\
+32 & 4.6169 & 10.891 & 21.095 \\
+\hline
+\end{tabular}
+\caption{Average maximum queue time for the two-sided loop algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 5.6517 & 9.4478 & 14.03 \\
+4 & 5.408 & 8.6219 & 13.274 \\
+8 & 5.3134 & 8.2388 & 12.035 \\
+16 & 5.3134 & 8.1343 & 11.965 \\
+32 & 5.3134 & 8.1343 & 11.965 \\
+\hline
+\end{tabular}
+\caption{Average throughput for the two-sided loop algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 0.54545 & 0.26368 & 0.49254 \\
+4 & 2.908 & 3.0955 & 2.8557 \\
+8 & 2.88 & 2.75 & 2.5721 \\
+16 & 5.2474 & 4.0588 & 4.0546 \\
+32 & 19.298 & 9.5122 & 8.1783 \\
+\hline
+\end{tabular}
+\caption{Average minimum queue time for the simple algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 2.8838 & 3.7831 & 6.6417 \\
+4 & 6.0868 & 6.8707 & 8.4318 \\
+8 & 12.088 & 12.903 & 13.527 \\
+16 & 21.503 & 22.225 & 23.952 \\
+32 & 52.025 & 47.191 & 48.236 \\
+\hline
+\end{tabular}
+\caption{Average queue time for the simple algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 4.3889 & 8.5721 & 17.139 \\
+4 & 6.8712 & 9.5377 & 15.498 \\
+8 & 13.51 & 14 & 17.876 \\
+16 & 17.423 & 17.662 & 19.53 \\
+32 & 35.553 & 30.878 & 30.318 \\
+\hline
+\end{tabular}
+\caption{Average maximum queue time for the simple algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 4.796 & 8.8557 & 14.109 \\
+4 & 3.6667 & 6.9254 & 12.502 \\
+8 & 2.5423 & 4.8806 & 9.5572 \\
+16 & 1.7711 & 3.4428 & 6.5174 \\
+32 & 0.801 & 1.7214 & 3.4726 \\
+\hline
+\end{tabular}
+\caption{Average throughput for the simple algorthm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 0.54545 & 0.26368 & 0.49254 \\
+4 & 2.908 & 3.0955 & 2.8557 \\
+8 & 2.88 & 2.75 & 2.5721 \\
+16 & 5.2474 & 4.0588 & 4.0546 \\
+32 & 19.298 & 9.5122 & 8.1783 \\
+\hline
+\end{tabular}
+\caption{Average minimum queue time for the two-sided algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 2.8838 & 3.7831 & 6.6417 \\
+4 & 6.0868 & 6.8707 & 8.4318 \\
+8 & 12.088 & 12.903 & 13.527 \\
+16 & 21.503 & 22.225 & 23.952 \\
+32 & 52.025 & 47.191 & 48.236 \\
+\hline
+\end{tabular}
+\caption{Average queue time for the two-sided algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 4.3889 & 8.5721 & 17.139 \\
+4 & 6.8712 & 9.5377 & 15.498 \\
+8 & 13.51 & 14 & 17.876 \\
+16 & 17.423 & 17.662 & 19.53 \\
+32 & 35.553 & 30.878 & 30.318 \\
+\hline
+\end{tabular}
+\caption{Average maximum queue time for two-sided algorithm}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{cars} & 50 & 100 & 200\\
+\hline
+\textbf{switch time} & & & \\
+2 & 4.796 & 8.8557 & 14.109 \\
+4 & 3.6667 & 6.9254 & 12.502 \\
+8 & 2.5423 & 4.8806 & 9.5572 \\
+16 & 1.7711 & 3.4428 & 6.5174 \\
+32 & 0.801 & 1.7214 & 3.4726 \\
+\hline
+\end{tabular}
+\caption{Average throughput for the two-sided algorithm}
+\end{table}
 
 \end{document}
