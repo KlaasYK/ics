@@ -62,6 +62,13 @@
  Abstract
 }
 \end{abstract}
+\medskip\medskip
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.4\linewidth]{img/trafficlighttree.jpg}
+\end{figure}
+
+
 \end{titlepage}
 
 \newpage
@@ -70,19 +77,54 @@
 \newpage
 
 \section{Introduction}
+Waiting is never fun, espacially if you have to get somewhere by car and you are encountering a red traffic light.
+Sometimes traffic lights work well, but sometimes it yields a green light for an empty lane, while another lane is packed with cars.
+Some research on this topic has been done into simulating and using machine learning techiniques for determining the best
+possible algorithms.
+Instead of using a complex algorithm, we try to evaluate the performance of regular time-based approaches and simple loop detection.
 
+\subsubsection*{Outline of this report}
+Section \ref{sec:rel} discusses the use of reinforcement learning for traffic light algorithms.
+Section \ref{sec:concept} describes the concept of our simulation.
+Section \ref{sec:implementation} goes into to implementation details of the concept.
+Section \ref{sec:results} describes the testing set-up used and shows the experimental results.
+Section \ref{sec:eval} discusses the results and Section \ref{sec:conclusion} concludes.
 
-\section{Related work}
+\section{Related work}\label{sec:rel}
 
 % Wiering
 Wiering \cite{Wiering00}
 
-\section{Concept}
+\section{Concept}\label{sec:concept}
+% TODO: dit is nog maar een beginnetje, kan misschien nog wat uitgebreider
+
+Instead of complex adaptive learning algorithms, a simple approach is used.
+The simulation will abstract from the reallity to simplify the calculations.
+The simulation will only consider cars, there are no biking lanes or pedestrian lights.
+In the simulation cars will be considered all equal.
+There is no difference between a large truck and small car.
+The roads will be considerd a grid, in which each car takes up exactly one grid space.
+Time will be descritized by allowing cars one action per timestep:
+\begin{itemize}
+ \item If not in front of light: move forward one space in the current grid if the next grid space is empty, otherwise wait.
+ \item If in fornt of light: move to the next grid space when the light is green, otherwise wait
+\end{itemize}
+
+
 
 \subsection{Grid of intersections}
+The realworld is simulated at the intersection level.
+Each intersection consists of a number of lanes for each direction.
+For each lane a destination direction is set.
+When a car paases the traffic light, it passed on to the next intersection.
+This is done by keeping track of a grid of intersections.
+Each direction of an intersection is connected to another intersection.
+This way a car can navigate from one intersection to another.
+Complex graph like structures can be created this way, depending on the number of
+directions.
 
 \subsection{Algorithms}
-% TODO: dit is nog maar een beginnetje, kan misschien nog wat uitgebreider
+
 
 For this assignment two different algorithms will be used.
 There will also be a version of both algorithms with loop detection.
@@ -153,13 +195,15 @@ ELSE
 
 
 
-\section{Implementation}
+\section{Implementation}\label{sec:implementation}
 % realisation
 
-\section{Results}
+\section{Results}\label{sec:results}
 % evaluation and results
 
-\section{Conclusion}
+\section{Evaluation}\label{sec:eval}
+
+\section{Conclusion}\label{sec:conclusion}
 
 
 \subsection{Future work}
