@@ -4,6 +4,7 @@
 \usepackage{float}
 \usepackage{url}
 
+\usepackage{verbatim}
 \usepackage{listings}
 \usepackage{color}
 
@@ -125,34 +126,30 @@ Time will be discretized by allowing cars one action per time step:
 
 
 \subsection{Grid of intersections}
-The real world is broken down to intersection.
+In our simulation the real world traffic network is broken down to intersections.
 Each intersection consists of a number of lanes for each direction.
-For each lane a destination direction is set.
+And for each lane a destination direction is set.
+The intersections and lanes together form a grid of intersections.
 When a car passes the traffic light, it passed on to the next intersection.
-This is done by keeping track of a grid of intersections.
 Each direction of an intersection is connected to another intersection.
-This way a car can navigate from one intersection to another.
-Complex graph like structures can be created this way, depending on the number of
-directions.
+This way a car can navigate from one intersection to another and depending on the number of directions a complex graph like structures can be created.
 
-Each intersection has 2 traffic lights per incoming direction.
+Another restriction in our model is that each intersection has 2 traffic lights per incoming direction.
 One for turning left and one for turning right or going straight ahead.
-We do not allow for states at which collisions between cars can happen.
-So there are two possible algorithms for the traffic lights.
+An extra assumption is that the traffic is well behaved, so we do not allow for states at which collisions between cars can happen.
+Initially we consider two possible algorithms for the traffic lights and later two variations for each.
 
 \subsection{Algorithms}
 
-For this assignment two different algorithms will be used.
-There will also be a version of both algorithms with loop detection.
-A time stamp will be used as an input for each of the algorithms, along
-with a variable for setting the amount of time steps for a light to switch.
+For this assignment two different algorithms will be used, namely a simple algorithm and a two-sided algorithm.
+Also variants of both algorithms with loop detection are considered by introducing loop-detection for cars.
+The primary inputs for these algorithms are a time stamp, along with a variable for setting the amount of time steps for a light to switch.
 
 \subsubsection*{Simple}
-The simple algorithm is based on old-fashioned traffic handling by
-a human in the center of the intersection pointing at the lane which may move.
+The simple algorithm is based on old-fashioned traffic handling by a human in the center of the intersection pointing at the lane which may move.
 At each time step, one of the four directions will get the green light and cars can move.
-After a given amount of time steps, the next direction will be set to green and the current direction set to red.
-In pseudo code:
+After a given amount of time steps the next direction will be set to green and the current direction set to red.
+This results in the following pseudo code:
 
 \begin{lstlisting}
 SET direction TO (time stamp DIV switch time) MOD number of directions
@@ -162,9 +159,9 @@ SET lights of lanes in direction TO green
 
 \subsubsection*{Two Sided}
 The two sided algorithm uses the fact that two opposing lanes can move at the same time.
-Cars moving straight forward or turning right can move at the same time as the cars on the
-opposing lane moving forward and right. The same is true for the lane turning left.
-In pseudo code:
+Cars moving straight forward or turning right can move at the same time as the cars on the opposing lane moving forward and right.
+The same is true for the lane turning left.
+This can be expressed in pseudo code as follows:
 
 \begin{lstlisting}
 SET direction TO (time stamp DIV switch time) MOD number of directions
@@ -173,17 +170,19 @@ SET the light in the opposing lane TO green
 \end{lstlisting}
 
 \subsection*{Loop detection}
+Detecting cars in a lane can be done with loop detection.
+This usually works by detecting the change in an electromagnetic field when a car passes over it.
+If a car is detected in a lane, then the algorithm can give that lane a higher priority.
 The loop detection can be applied to both of the previous algorithms.
-For this, each traffic light need to keep track of which lanes currently have green light
+For this, each traffic light need to keep track of additional information, which lanes currently have green light
 and at what time stamp the last change happened.
-It also needs to keep track of the front of each lane and whether a car is present in it.
-It will only set lights to green if the next lanes according to the algorithm are not empty.
-If it encounters an empty lane, it will look for the next lane.
-If the next lane is not empty, set those lights to green.
-If all lanes are empty, keep all lights red and wait for a car to appear.
-If the change time has not yet expired, check if there are still cars present.
-If not, schedule a new change.
-In pseudo code:
+Naturally it also needs to keep track of the front of each lane and whether a car is present in it.
+
+The loop detection variant will keep the lights on red, while it waits for a car to appear.
+It will only set lights to green, if the next lanes are not empty, while it cycles through the lanes.
+And if the change time has not yet expired, the algorithm needs to check if there are still cars present.
+If this is not the case, then a new light change can be scheduled.
+The semantics are as follows given in pseudo code:
 
 \begin{lstlisting}
 SET direction TO stored direction
@@ -203,18 +202,14 @@ IF time stamp - last change time >= switch time THEN
 ELSE
   IF front of lanes in direction are empty THEN
     SET last change time TO time stamp - switch time
-
-  
-	
-  
 \end{lstlisting}
 
 
 
 \section{Implementation}\label{sec:implementation}
 
-The grid of intersections consists of 9 intersections.
-Each intersection is connected to 4 others: top, left bottom and right.
+Our implementation of this model has a grid of 9 intersections.
+Each intersection is connected to 4 others: up, down, left and right direction.
 For boundary intersections, a periodic boundary condition is in place where
 cars moving out of the grid will reappear on the opposing side of the grid.
 The grid layout can be seen in Figure \ref{fig:intersections}.
@@ -226,24 +221,62 @@ The grid layout can be seen in Figure \ref{fig:intersections}.
   \label{fig:intersections}
 \end{figure}
 
+The code itself is written in the \verb|C++| language \cite{cpp} and the \verb|Qt| framework \cite{qt}.
+This allowed us to quickly prototype the model.
+Because we simplified the traffic network we can model it as an array of intersections.
+Ideally this would be a graph, but this would be too much work currently.
+The lanes are then represented by queues for 8 cars, these queues are also stored with arrays.
+The most complex code is in the intersection class, which contains all the switching algorithms.
+The rest is rather trivial.
+Also note that a random numbers generator is used in our application.
+While this can reduce the reproducability of the results, this is not the case here because the seed is fixed.
+Sadly there is a bug somewhere, so to get reproducable results one has to press the reset button first.
+A screenshot of the application can be seen in Figure \ref{fig:screenshot}.
 
-% TODO: Maak een note over de bug: eerst een reset doen om random seed te genereren.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.8\linewidth]{img/screenshot.png}
+  \caption{A screenshot of the simulation in action.}
+  \label{fig:screenshot}
+\end{figure}
+
 
 \section{Results}\label{sec:results}
-% test parameters results
-The simulations varied by using different number of cars: 50, 100 and 200,
-resembling different traffic loads.
+
+For each algorithm we are interested in the performance.
+This can for example be measured by keeping track of how many cars flow through the intersection or by how long the waiting times are.
+Of course we cannot go measure these things randomly.
+An example of the max waiting time can be seen in Figure \ref{fig:waittime}.
+As the data is shown the distinction between the two is not immediately clear, since comparing the lines this way is rather hard.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.8\linewidth]{img/maxwait.png}
+  \caption{A plot of the maximum waiting times for 200 cars with switching time 4 for algorithms without loop-detection.}
+  \label{fig:waittime}
+\end{figure}
+
+Another thing to note is that in the beginning the maximum wait time is not yet stable.
+Therefore in all our measurements we only use the last $40\%$ of the steps to make sure the system is equilibrium.
+To measure the throughput we keep track of how many cars move trough the intersection and then average it over the number of steps.
+And to measure the waiting times we choose to keep track of the minimum, the maximum and the average waiting time.
+As shown in the image above the minimum/maximum waiting times by themselfs are not easy to compare, so we choose to average them.
+Note that this is not an entirely realistic measure, since it does not show the spread of the maximum wait times.
+We do feel however that this is a good indicator.
+
+
+Of cource to be able to compare the algorithms not only one situation is enough.
+Therefore we varied the number of cars and the switching times.
+The number of cars used is: 50, 100 and 200.
+By changing the number of cars we try to simulate different densities of traffic.
 The different switch times used were: 2, 4, 8, 16 and 32.
-These were chosen since they were either a $\frac{1}{4}$, $\frac{1}{2}$, 1, 2 or 4 times the length of the lanes (8).
-For graphing purposes, each algorithm was simulated for 500 simulation steps.
-To get consistent results, the random generators are seeded with the same seed for each run.
-
-% TODO: voeg de afbeeldingen in.
-
-
+These were chosen since they were either a $\frac{1}{4}$, $\frac{1}{2}$, 1, 2 or 4 times the length of the lanes (8) and we expect this to influence the efficientcy of the algorithms.
+To make sure that at the end of the simulation it is in an equilibrium state, we ran the simulation for 500 steps.
+And to get consistent results, the random generators are seeded with the same seed for each run.
 
 \section{Evaluation}\label{sec:eval}
 
+The resulting statistics can be found in Section \ref{app:rtables} in the appendix.
 % TODO: evalution and discussion of the results
 
 \section{Conclusion}\label{sec:conclusion}
