@@ -259,7 +259,7 @@ As the data is shown the distinction between the two is not immediately clear, s
 
 Another thing to note is that in the beginning the maximum wait time is not yet stable.
 Therefore in all our measurements we only use the last $40\%$ of the steps to make sure the system is equilibrium.
-To measure the throughput we keep track of how many cars move trough the intersection and then average it over the number of steps.
+To measure the throughput we keep track of how many cars move through the intersection and then average it over the number of steps.
 And to measure the waiting times we choose to keep track of the minimum, the maximum and the average waiting time.
 As shown in the image above the minimum/maximum waiting times by themselfs are not easy to compare, so we choose to average them.
 Note that this is not an entirely realistic measure, since it does not show the spread of the maximum wait times.
@@ -290,12 +290,35 @@ The resulting statistics can be found in Section \ref{app:rtables} in the append
 
 \subsection{Future work}
 
-\begin{itemize}
- \item Setting chance choosing between the left lane or the other independently. Now all is equal %Klaas
- \item Giving cars incentive to drive to a certain destination
- \item Make the amount of cars change over time (rush hour effect)
-\end{itemize}
+There is plenty room for improvements on this work in the concept, implementation and the comparison methodology.
+The concept can be improved by extending it so that it is more natural.
+So one could include other types of traffic or maybe allow for acceleration.
+Of course any of the restrictions mentioned in the Concept section could be changed to a situation of interest.
+Another interesting effect that could be added is a rush hour effect.
+So to model how peaks of high traffic are dealt with.
 
+The implementation could be improved by making it more efficient and more flexible in the sense that it may be nice to handle more and different cars.
+One point of interest is the simulation of the traffic.
+Currently the lanes the car chooses to go into are choosen at random.
+This is not very realistic and maybe the car should have a preset destination it wishes to reach.
+The cars then could also have an incentive to drive a certain route.
+By making the traffic more realistic we hope that the results of the algorithm also improve.
+By moving away from a grid to a graph the distances and the travel time could become more realistic and at the same time allow to test more diverse situations.
+One could for example focus on the situation in groningen in particular the find just the right algorithm for their traffic lights.
+
+Lastly the methodology used to compare the algorithms is not perfect.
+Take for example the throughput of the intersections.
+It may not be independent of the density of the traffic, however just taking the average does not take this in account.
+Maybe it should be normalized by the car density or maybe a different statistic altogether makes for a better comparison for example the commulative throughput.
+The switching time may also influence the throughput by staying too long on green for example.
+This was however not investigated and also not accounted for when we calculated the statistics.
+Maybe it is fairer to compare the traffic lights over the same ammount of cycles.
+
+Taking the average of maximum and minimum waiting times also is not a great solution, since we are also interested in the maxima and minima of those.
+One possible solution would be to calculate the variance too, so that one could say something about the spread of the values.
+However there is this the question if these values also need to be normalized and how.
+For example it should probably be normalized for the density of traffic.
+So all in all there is plenty left to research.
 
 \bibliographystyle{acm}
 
