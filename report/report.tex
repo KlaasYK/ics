@@ -77,9 +77,10 @@
 \newpage
 
 \section{Introduction}
-Waiting is never fun, espacially if you have to get somewhere by car and you are encountering a red traffic light.
+% TODO: reread this ;)
+Waiting is never fun, especially if you have to get somewhere by car and you are encountering a red traffic light.
 Sometimes traffic lights work well, but sometimes it yields a green light for an empty lane, while another lane is packed with cars.
-Some research on this topic has been done into simulating and using machine learning techiniques for determining the best
+Some research on this topic has been done into simulating and using machine learning techniques for determining the best
 possible algorithms.
 Instead of using a complex algorithm, we try to evaluate the performance of regular time-based approaches and simple loop detection.
 
@@ -92,39 +93,44 @@ Section \ref{sec:eval} discusses the results and Section \ref{sec:conclusion} co
 
 \section{Related work}\label{sec:rel}
 
-% Wiering
-Wiering \cite{Wiering00}
+% TODO: Wiering (see the document inside the git repo)
+Wiering \cite{Wiering00} 
 
 \section{Concept}\label{sec:concept}
 % TODO: dit is nog maar een beginnetje, kan misschien nog wat uitgebreider
 
 Instead of complex adaptive learning algorithms, a simple approach is used.
-The simulation will abstract from the reallity to simplify the calculations.
+The simulation will abstract from the reality to simplify the calculations.
 The simulation will only consider cars, there are no biking lanes or pedestrian lights.
 In the simulation cars will be considered all equal.
 There is no difference between a large truck and small car.
-The roads will be considerd a grid, in which each car takes up exactly one grid space.
-Time will be descritized by allowing cars one action per timestep:
+Cars do not have complex behavior, they just drive forward and choose randomly which lane to pick when
+entering an intersection.
+The roads will be considered a grid, in which each car takes up exactly one grid space.
+Time will be discretized by allowing cars one action per time step:
 \begin{itemize}
  \item If not in front of light: move forward one space in the current grid if the next grid space is empty, otherwise wait.
- \item If in fornt of light: move to the next grid space when the light is green, otherwise wait
+ \item If in front of light: move to the next grid space when the light is green, otherwise wait
 \end{itemize}
 
 
-
 \subsection{Grid of intersections}
-The realworld is simulated at the intersection level.
+The real world is broken down to intersection.
 Each intersection consists of a number of lanes for each direction.
 For each lane a destination direction is set.
-When a car paases the traffic light, it passed on to the next intersection.
+When a car passes the traffic light, it passed on to the next intersection.
 This is done by keeping track of a grid of intersections.
 Each direction of an intersection is connected to another intersection.
 This way a car can navigate from one intersection to another.
 Complex graph like structures can be created this way, depending on the number of
 directions.
 
-\subsection{Algorithms}
+Each intersection has 2 traffic lights per incoming direction.
+One for turning left and one for turning right or going straight ahead.
+We do not allow for states at which collisions between cars can happen.
+So there are two possible algorithms for the traffic lights.
 
+\subsection{Algorithms}
 
 For this assignment two different algorithms will be used.
 There will also be a version of both algorithms with loop detection.
@@ -196,15 +202,43 @@ ELSE
 
 
 \section{Implementation}\label{sec:implementation}
-% realisation
+
+The grid of intersections consists of 9 intersections.
+Each intersection is connected to 4 others: top, left bottom and right.
+For boundary intersections, a periodic boundary condition is in place where
+cars moving out of the grid will reappear on the opposing side of the grid.
+The grid layout can be seen in Figure \ref{fig:intersections}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.8\linewidth]{img/intersections.png}
+  \caption{The empty intersection grid with all lights red.}
+  \label{fig:intersections}
+\end{figure}
+
+
+% TODO: Maak een note over de bug: eerst een reset doen om random seed te genereren.
 
 \section{Results}\label{sec:results}
-% evaluation and results
+% test parameters results
+The simulations varied by using different number of cars: 50, 100 and 200,
+resembling different traffic loads.
+The different switch times used were: 2, 4, 8, 16 and 32.
+These were chosen since they were either a $\frac{1}{4}$, $\frac{1}{2}$, 1, 2 or 4 times the length of the lanes (8).
+For graphing purposes, each algorithm was simulated for 500 simulation steps.
+To get consistent results, the random generators are seeded with the same seed for each run.
+
+% TODO: voeg de afbeeldingen in.
+
+
 
 \section{Evaluation}\label{sec:eval}
 
+% TODO: evalution and discussion of the results
+
 \section{Conclusion}\label{sec:conclusion}
 
+% TODO: write conclusion
 
 \subsection{Future work}
 
