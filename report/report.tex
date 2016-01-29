@@ -94,7 +94,9 @@ Section \ref{sec:eval} discusses the results and Section \ref{sec:conclusion} co
 \section{Related work}\label{sec:rel}
 
 % TODO: Wiering (see the document inside the git repo)
-Wiering \cite{Wiering00} 
+Wiering \cite{Wiering00} describes a method of using reinforcement learning for
+traffic light controllers and co-learning with the cars.
+
 
 \section{Concept}\label{sec:concept}
 % TODO: dit is nog maar een beginnetje, kan misschien nog wat uitgebreider
@@ -107,7 +109,7 @@ There is no difference between a large truck and small car.
 Cars do not have complex behavior, they just drive forward and choose randomly which lane to pick when
 entering an intersection.
 The roads will be considered a grid, in which each car takes up exactly one grid space.
-Time will be discretized by allowing cars one action per time step:
+Time will be discretized by allowing cars one action per time-step:
 \begin{itemize}
  \item If not in front of light: move forward one space in the current grid if the next grid space is empty, otherwise wait.
  \item If in front of light: move to the next grid space when the light is green, otherwise wait
@@ -135,13 +137,13 @@ So there are two possible algorithms for the traffic lights.
 For this assignment two different algorithms will be used.
 There will also be a version of both algorithms with loop detection.
 A time stamp will be used as an input for each of the algorithms, along
-with a variable for setting the amount of time steps for a light to switch.
+with a variable for setting the amount of time-steps for a light to switch.
 
 \subsubsection*{Simple}
 The simple algorithm is based on old-fashioned traffic handling by
 a human in the center of the intersection pointing at the lane which may move.
-At each time step, one of the four directions will get the green light and cars can move.
-After a given amount of time steps, the next direction will be set to green and the current direction set to red.
+At each time-step, one of the four directions will get the green light and cars can move.
+After a given amount of time-steps, the next direction will be set to green and the current direction set to red.
 In pseudo code:
 
 \begin{lstlisting}
@@ -235,6 +237,10 @@ To get consistent results, the random generators are seeded with the same seed f
 \section{Evaluation}\label{sec:eval}
 
 % TODO: evalution and discussion of the results
+
+\subsubsection*{Patterns}
+
+% TODO: describe the pattern emerging with two sided, long switch time
 
 \section{Conclusion}\label{sec:conclusion}
 
