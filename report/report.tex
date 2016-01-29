@@ -301,11 +301,13 @@ Again the same can be seen for the average queue time and the maximum queue time
 Also the throughput of the loop algorithm is more stable and higher than its non loop counterpart.
 Therefor the two sided loop detection algorithm performs best of the two.\\
 
-\noindent 
-
-
-
-
+\noindent The two loop algorithm perform almost equally well.
+Only the throughput of the two sider loop algorithm is slightly higher compared to that of the simple loop algorithm
+and the average and minimum wait times are almost equal.
+The only large difference seems to be for the maximum wait time when a saturated grid with 200 cars and a long switch time is used.
+The two sided algorithm still performs similar to the 16 step switch time, while the simple loop has a spike an increases by a third 
+of the value of the 16 step switch time. Since this is the only difference and the results for the other statistics are more or less equal,
+both algorithms can be considered as equal performing.
 
 \subsubsection*{Patterns}
 When using the two sided algorithm, a pattern emerges when the switch time is set to a large value (50 for example).
