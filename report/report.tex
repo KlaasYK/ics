@@ -279,6 +279,32 @@ And to get consistent results, the random generators are seeded with the same se
 
 The resulting statistics can be found in Section \ref{app:rtables} in the appendix.
 % TODO: evalution and discussion of the results
+First the simple algorithm is compared with the loop version of the algorithm.
+Second the two sided algorithm is compared with the loop version.
+After that the "best" of the both types are compared with each other.\\
+
+\noindent The simple loop algorithm seems to perform at least at the level of the simple algorithm
+and in some cases even better. The minimum wait times from Table \ref{tab:simpleloopmintime} are for large switch times and large number of cars smaller
+than its counterpart in Table \ref{tab:simplemintime}. The same is true for the average queue wait time (Table \ref{tab:simpleloopavgtime} and Table \ref{tab:simpleavgtime}).
+Especially in the case of the maximum wait time for a low amount of cars with a large switch, the loop algorithm performs significantly better.
+Looking at the throughput of both cases (Table \ref{tab:simplecars} and Table \ref{tab:simpleloopcars}), the loop detection algorithm has 
+a steady throughput which does not decrease much when the switch time is increased, while the simple algorithm decreases a lot.
+Since the waiting times of the loop detection algorithm are lower and the throughput is higher, the loop detection algorithm performs best of the two.\\
+
+\noindent The two sided loop algorithm, compared to the normal two sided algorithm, also seems to perform better.
+Minimum wait times do not seem to increase much in Table \ref{tab:twoloopmintime} when increasing the wait time and the number of cars,
+while the two sided algorithm increases with the switch time in Table \ref{tab:twomintime}. A curious case is the switch time of 32, with 50 cars for the simple algorithm.
+Compared to the same switch time with 100 and 200 cars, it seems to be disproportionately large.
+This is probably to there being less cars, of which there are a great deal waiting for empty intersection, while when there are more cars, the intersections are more filled.
+The loop detection algorithm takes care of this problem by switching when it detects an empty lane.
+Again the same can be seen for the average queue time and the maximum queue time.
+Also the throughput of the loop algorithm is more stable and higher than its non loop counterpart.
+Therefor the two sided loop detection algorithm performs best of the two.\\
+
+\noindent 
+
+
+
 
 
 \subsubsection*{Patterns}
