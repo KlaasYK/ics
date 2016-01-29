@@ -102,16 +102,21 @@ Which basically means that the traffic lights strive as a group to minimize the 
 Wiering found that in his simulations that a reinforcement learning algorithm can outperform traditional non-adaptable systems.
 
 \section{Concept}\label{sec:concept}
-% TODO: dit is nog maar een beginnetje, kan misschien nog wat uitgebreider
 
-Instead of complex adaptive learning algorithms, a simple approach is used.
-The simulation will abstract from the reality to simplify the calculations.
-The simulation will only consider cars, there are no biking lanes or pedestrian lights.
-In the simulation cars will be considered all equal.
-There is no difference between a large truck and small car.
-Cars do not have complex behavior, they just drive forward and choose randomly which lane to pick when
-entering an intersection.
-The roads will be considered a grid, in which each car takes up exactly one grid space.
+Instead of complex adaptive learning algorithms, simple algorithms are used in this report.
+To simplify the calculations and to keep the scope small our simulation will abstract from the reality.
+Therefore we place the following restrictions on the simulation.
+
+Firstly the simulation will only consider cars, there is no other traffic and thus no biking lanes or pedestrian lights.
+The reason is that car trafic by itself can be made quite complex already.
+Secondly to reduce this complexity all cars will be considered all equal.
+So there is no difference between a large truck and small car.
+We choose this restriction to simplify the implementation.
+In addition cars do not have complex behavior, they just drive forward and choose randomly which lane to pick when entering an intersection.
+
+Thirdly we simplify the traffic network, since it normally can take a quite organic shape.
+This organic shape is hard to model and often unique to a city.
+So the roads will be generalized to a grid, in which each car takes up exactly one grid space.
 Time will be discretized by allowing cars one action per time step:
 \begin{itemize}
  \item If not in front of light: move forward one space in the current grid if the next grid space is empty, otherwise wait.
