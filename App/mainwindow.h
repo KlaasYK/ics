@@ -17,8 +17,13 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
+
+
 private slots:
+
   void step();
+
+
   void on_StepBtn_clicked();
   void on_StartStopBtn_clicked();
   void on_ResetBtn_clicked();

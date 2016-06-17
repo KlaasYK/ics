@@ -5,15 +5,6 @@
 #include <QFileDialog>
 #include <QFile>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
-    ui->setupUi(this);
-    sim = new Simulation();
-    ui->trafficview->setState(sim->getIntersections());
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(step()));
-    delay = 100;
-}
 
 MainWindow::~MainWindow() {
     delete sim;
@@ -79,6 +70,22 @@ void MainWindow::on_SetCars_clicked()
     updateUI();
 }
 
+
+
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    ui->setupUi(this);
+    sim = new Simulation();
+    ui->trafficview->setState(sim->getIntersections());
+
+    // Constructor
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(step()));
+    delay = 100;
+}
+
 void MainWindow::stopTimer()
 {
     timer->stop();
@@ -90,14 +97,31 @@ void MainWindow::on_StartStopBtn_clicked() {
 
     if (timer->isActive()) {
         qDebug() << "Stopped";
+
         stopTimer();
+
     } else {
-        qDebug() << "Started";
         timer->start(delay);
+        qDebug() << "Started";
+
+
+
         ui->StartStopBtn->setText("Stop");
         ui->StepBtn->setEnabled(false);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 void MainWindow::on_StepBtn_clicked() {
   step();
